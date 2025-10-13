@@ -2,7 +2,9 @@
     <div>
         <div class="header_card my_card">
             <div class="header_card_logo">
-                <img src="https://my.wulvxinchen.cn/pictures/logo/logo.webp" alt="xinchen" class="header_card_img">
+                <a href="./about" >
+                    <img src="https://my.wulvxinchen.cn/pictures/logo/logo.webp" alt="xinchen" class="header_card_img">
+                </a>
                 <strong>心尘的工具集</strong>
             </div>
             <div class="header_card_info">
@@ -10,7 +12,7 @@
                         <el-divider direction="vertical" />
                         <a href="https://github.com/drpasserby/XinchenTools/issues">反馈</a>
                         <el-divider direction="vertical" />
-                        <a href="./about.html">关于</a>
+                        <a href="./about">关于</a>
                     </span>
                 </div>
         </div>
@@ -43,12 +45,8 @@
                 </el-col>
                 <el-col :xs="24" :xl="8">
                     <div class="my_card body_card_item">
-                        <h3>随机一站<span :v-model="randomTool">{{ randomTool }}</span></h3>
-                        <el-button-group>
-                            <el-button plain>再换一个</el-button>
-                            <el-button type="primary" plain>查看信息</el-button>
-                            <el-button type="success" plain>直接访问</el-button>
-                        </el-button-group>
+                        <h3>随机一站</h3>
+                        <el-button type="primary" plain>抽卡</el-button>
                     </div>
                 </el-col>
         </el-row>
@@ -78,7 +76,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .my_card{
     background-color: #fff;
     border-radius: .5em;
@@ -100,7 +98,6 @@ export default {
     justify-content: space-between;
     align-items: center;
     width: 80%;
-    height: 6em;
     margin: 2em auto;
 }
 
