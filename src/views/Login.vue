@@ -73,7 +73,7 @@ export default {
         window.location.href = 'https://wulvxinchen.cn/'
     },
     login(){
-      axios.post('https://api.wulvxinchen.cn/api/login',{
+      axios.post('https://my.wulvxinchen.cn/tools2/api/login.php',{
         username: this.loginForm.username,
         password: this.loginForm.password
       }).then(res=>{
@@ -103,6 +103,9 @@ export default {
     },
     clearAll(){
       localStorage.removeItem('userinfo');
+      this.loginForm.username = '';
+      this.loginForm.password = '';
+      this.isRemeber = false;
       this.$message({
         message: '清除成功',
         type: 'success'
