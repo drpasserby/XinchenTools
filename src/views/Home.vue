@@ -21,7 +21,7 @@
                 <el-col :xs="24" :xl="8">
                     <div class="my_card body_card_item">
                         <h3>状态</h3>
-                        <p :v-model="count">共有{{count}}个网站</p>
+                        <p :v-model="count" v-loading="loading">共有{{tools.length}}个网站</p>
                     </div>
                 </el-col>
                 <el-col :xs="24" :xl="8">
@@ -46,22 +46,41 @@
                 <el-col :xs="24" :xl="8">
                     <div class="my_card body_card_item">
                         <h3>随机一站</h3>
-                        <el-button type="primary" plain>抽卡</el-button>
+                        <el-button type="primary">抽卡</el-button>
                     </div>
                 </el-col>
         </el-row>
+        </div>
+        <div class="body_card my_card">
+            <el-button type="primary" @click="getTools()">获取</el-button>
+            <el-button type="danger" @click="deltool()">删掉最后一个</el-button>
+        </div>
+        <div class="body_card">
+            <el-row :gutter="10">
+                <el-col :xs="24" :xl="8" v-for="i in tools" :key="i">
+                    <div class="my_card body_card_item tool_card">
+                        <p class="tool_name"><strong>{{ i.name }}</strong></p>
+                        <p class="tool_type">{{ i.type }}</p>
+                        <div>
+                            <el-button type="primary" :href="'./detail?id='+i.id">详情</el-button>
+                            <el-button type="success" :href="i.url" target="_blank">访问</el-button>
+                        </div>
+                    </div>
+                </el-col>
+            </el-row>
         </div>
     </div>
 </template>
 
 <script>
-
+import axios from 'axios';
 export default {
   name: 'Home',
   components: {},
     data() {
     return {
         count: 128,
+        loading: false,
         searchInput: '',
         randomTool: {
             "id": 1,
@@ -69,10 +88,23 @@ export default {
             "name": "申论生成器",
             "url": "https://sojo.im/slscq/",
             "til": "在线生成申论"
+        },
+        tools: []
+    };},
+    methods: {
+        getTools(){
+            this.loading = true
+            axios.get('https://my.wulvxinchen.cn/tools2/api/searchAll.php').then(res=>{
+                this.tools = res.data.data.slice().reverse()
+                this.loading = false
+                // 最后删掉输出
+                console.log(this.tools)
+            })
+        },
+        deltool(){
+            this.tools.pop()
         }
-    };
-    },
-  
+    }
 }
 </script>
 
@@ -144,8 +176,21 @@ export default {
     margin: 2em auto;
 }
 .body_card_item{
-    height: 6em;
     margin: .5em auto;
     text-align: center;
+}
+.tool_card{
+    transition: all .5s;
+}
+.tool_card:hover{
+    border: 1px solid #999;
+    background-color: #f2ffe5;
+}
+.tool_name{
+    font-size: 1.75em;
+    margin: .3em 0;
+}
+.tool_type{
+    color: #6c757d;
 }
 </style>
