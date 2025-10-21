@@ -1,16 +1,14 @@
 <template>
   <div>
-    <div class="header_card my_card">
-        <el-button-group>
-            <el-button type="primary" plain @click="backTools()">返回工具集</el-button>
-            <el-button type="danger" plain @click="logout()">退出</el-button>
-        </el-button-group>
+    <div class="header_card my_card remove_flex">
+      <el-button type="primary" @click="backTools()">返回工具集</el-button>
+      <el-button type="danger" @click="logout()">退出</el-button>
     </div>
     <div class="header_card my_card">
-      <el-button type="primary" plain @click="addTool()">快速新增</el-button>
+      <el-button type="primary" @click="addTool()">快速新增</el-button>
     </div>
     <div class="header_card my_card remove_flex">
-      <el-button type="primary" plain @click="getTools()">获取</el-button><br><br>
+      <el-button type="primary" @click="getTools()">获取</el-button><br><br>
       <el-table :data="tools" stripe border v-loading="loading" style="width: 100%" height="600">
         <el-table-column prop="id" label="ID" sortable/>
         <el-table-column prop="type" label="类型" />
@@ -184,6 +182,7 @@ export default {
       axios.get('https://my.wulvxinchen.cn/tools2/api/searchAll.php').then(res=>{
         this.tools = res.data.data
         this.loading = false
+        // 最后删掉输出
         console.log(this.tools)
       })
     }
