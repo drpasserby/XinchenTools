@@ -2,8 +2,8 @@
   <div>
     <div class="header_card my_card">
         <el-button-group>
-            <el-button type="primary" plain @click="backTools()">返回工具集</el-button>
-            <el-button type="success" plain @click="backHome()">返回导航站</el-button>
+            <el-button type="primary" @click="backTools()">返回工具集</el-button>
+            <el-button type="success" @click="backHome()">返回导航站</el-button>
         </el-button-group>
     </div>
     <div class="header_card my_card">
