@@ -23,7 +23,7 @@
         </el-table-column>
       </el-table>
     </div>
-    <el-dialog v-model="addFormVisible" title="添加网址" width="500">
+    <el-dialog v-model="addFormVisible" title="添加网址" width="500" align-center>
       <el-form>
         <el-form-item label="ID">
           <el-input v-model="newToolForm.id" />
@@ -53,7 +53,7 @@
         </div>
       </template>
     </el-dialog>
-    <el-dialog v-model="editFormVisible" title="编辑网址" width="500">
+    <el-dialog v-model="editFormVisible" title="编辑网址" width="500" align-center>
       <el-form>
         <el-form-item label="ID">
           <el-input v-model="editToolForm.id" />
