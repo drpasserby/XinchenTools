@@ -166,7 +166,7 @@ export default {
     },
     getTools(){
       this.loading = true
-      axios.get('https://my.wulvxinchen.cn/tools/php/searchAll.php').then(res=>{
+      axios.get('https://my.wulvxinchen.cn/tools2/api/searchAll.php').then(res=>{
         this.tools = res.data.data
         this.loading = false
         console.log(this.tools)
