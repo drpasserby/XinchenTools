@@ -12,7 +12,7 @@
     <div class="header_card my_card remove_flex">
       <el-button type="primary" plain @click="getTools()">获取</el-button><br><br>
       <el-table :data="tools" stripe border v-loading="loading" style="width: 100%" height="600">
-        <el-table-column prop="id" label="ID" />
+        <el-table-column prop="id" label="ID" sortable/>
         <el-table-column prop="type" label="类型" />
         <el-table-column prop="name" label="名称" />
         <el-table-column prop="url" label="网址" />
@@ -143,6 +143,20 @@ export default {
           }
         ).then(() => {
           // 提交新增请求操作写这里
+          axios.post('https://my.wulvxinchen.cn/tools2/api/addTool.php', this.newToolForm).then(res=>{
+            if(res.data.code === 200){
+              ElMessage({
+                message: '添加成功',
+                type: 'success',
+              });
+              this.getTools()
+            } else {
+              ElMessage({
+                message: '添加失败：' + res.data.msg,
+                type: 'error',
+              });
+            }
+          })
           this.addFormVisible = false
         })
     },
@@ -161,6 +175,7 @@ export default {
           }
         ).then(() => {
           // 提交编辑请求操作写这里
+          alert(Cookies.get('xinchentools_auth_token'))
           this.editFormVisible = false
       })
     },
