@@ -3,7 +3,7 @@
     <div class="header_card my_card">
         <el-button-group>
             <el-button type="primary" @click="backTools()">返回工具集</el-button>
-            <el-button type="success" @click="backHome()">返回导航站</el-button>
+            <el-button type="success" @click="openURL('https://wulvxinchen.cn/')">返回导航站</el-button>
         </el-button-group>
     </div>
     <div class="header_card my_card">
@@ -69,8 +69,8 @@ export default {
     backTools(){
         this.$router.push('/')
     },
-    backHome(){
-        window.location.href = 'https://wulvxinchen.cn/'
+    openURL(url){
+        window.open(url, '_blank')
     },
     login(){
       axios.post('https://my.wulvxinchen.cn/tools2/api/login.php',{
