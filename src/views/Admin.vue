@@ -8,7 +8,7 @@
       <el-button type="primary" @click="addTool()">快速新增</el-button>
     </div>
     <div class="header_card my_card remove_flex">
-      <el-button type="primary" @click="getTools()">获取</el-button><br><br>
+      <el-button type="primary" @click="getTools()">获取</el-button><p>共有<el-text type="success">{{tools.length}}</el-text>个网站</p>
       <el-table :data="tools" stripe border v-loading="loading" style="width: 100%" height="600">
         <el-table-column prop="id" label="ID" sortable/>
         <el-table-column prop="type" label="类型" />
