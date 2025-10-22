@@ -51,10 +51,6 @@
                 </el-col>
         </el-row>
         </div>
-        <div class="body_card my_card">
-            <el-button type="primary" @click="getTools()">获取</el-button>
-            <el-button type="danger" @click="deltool()">删掉最后一个</el-button>
-        </div>
         <div class="body_card">
             <el-row :gutter="10">
                 <el-col :xs="24" :xl="8" v-for="i in tools" :key="i">
@@ -144,6 +140,9 @@ export default {
         deltool(){
             this.tools.pop()
         }
+    },
+    mounted(){
+        this.getTools()
     }
 }
 </script>
