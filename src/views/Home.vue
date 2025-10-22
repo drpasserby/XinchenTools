@@ -21,7 +21,7 @@
                 <el-col :xs="24" :xl="8">
                     <div class="my_card body_card_item">
                         <h3>状态</h3>
-                        <p :v-model="count" v-loading="loading">共有{{tools.length}}个网站</p>
+                        <p>共有{{tools.length}}个网站</p>
                     </div>
                 </el-col>
                 <el-col :xs="24" :xl="8">
@@ -46,7 +46,7 @@
                 <el-col :xs="24" :xl="8">
                     <div class="my_card body_card_item">
                         <h3>随机一站</h3>
-                        <el-button type="primary">抽卡</el-button>
+                        <el-button type="primary" @click="randomToolShow">抽卡</el-button>
                     </div>
                 </el-col>
         </el-row>
@@ -62,13 +62,27 @@
                         <p class="tool_name"><strong>{{ i.name }}</strong></p>
                         <p class="tool_type">{{ i.type }}</p>
                         <div>
-                            <el-button type="primary" :href="'./detail?id='+i.id">详情</el-button>
-                            <el-button type="success" :href="i.url" target="_blank">访问</el-button>
+                            <el-button type="primary" @click="toolOpenInfo(i.id)">详情</el-button>
+                            <el-button type="success" @click="openURL(i.url)">访问</el-button>
                         </div>
                     </div>
                 </el-col>
             </el-row>
         </div>
+        <el-dialog v-model="toolWinVisible" :title="'工具ID:' + showTool.id" width="800" align-center>
+            <p class="tool_name"><strong>{{ showTool.name }}</strong></p>
+            <p class="tool_type"><strong>类型：{{ showTool.type }}</strong></p>
+            <p class="tool_til">简介：{{ showTool.til }}</p>
+            <p class="tool_url">网址：<a :href="showTool.url" target="_blank">{{ showTool.url }}</a></p>
+            <template #footer>
+                <div>
+                    <el-button type="warning" @click="randomToolShow()" v-if="randomBtnVisible">再换一个</el-button>
+                    <el-button type="success" @click="openURL(showTool.url)">直接访问</el-button>
+                    <el-button type="info" @click="openURL('./page?id='+showTool.id)">独立页面</el-button>
+                    <el-button type="primary" @click="shareURL(showTool.url)">分享</el-button>
+                </div>
+            </template>
+        </el-dialog>
     </div>
 </template>
 
@@ -79,9 +93,17 @@ export default {
   components: {},
     data() {
     return {
-        count: 128,
+        toolWinVisible: false,
+        randomBtnVisible: false,
         loading: false,
         searchInput: '',
+        showTool:{
+            "id": 1,
+            "type": "实用",
+            "name": "申论生成器",
+            "url": "https://sojo.im/slscq/",
+            "til": "在线生成申论"
+        },
         randomTool: {
             "id": 1,
             "type": "实用",
@@ -101,6 +123,24 @@ export default {
                 console.log(this.tools)
             })
         },
+        randomToolShow(){
+            const randomIndex = Math.floor(Math.random() * this.tools.length);
+            this.showTool = this.tools[randomIndex];
+            this.randomBtnVisible = true
+            this.toolWinVisible = true
+        },
+        toolOpenInfo(id){
+            this.showTool = this.tools.find(tool => tool.id === id);
+            this.randomBtnVisible = false
+            this.toolWinVisible = true
+        },
+        openURL(url){
+            window.open(url, '_blank')
+        },
+        shareURL(url){
+            // 分享功能，复制到粘贴板，待补充
+        },
+        // 测试函数
         deltool(){
             this.tools.pop()
         }
@@ -187,10 +227,15 @@ export default {
     background-color: #f2ffe5;
 }
 .tool_name{
+    color: #000;
     font-size: 1.75em;
     margin: .3em 0;
 }
 .tool_type{
     color: #6c757d;
+}
+.tool_til{
+    padding: .3em;
+    border: 1px dashed #8b8b8b;
 }
 </style>
