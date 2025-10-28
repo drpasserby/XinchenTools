@@ -71,12 +71,12 @@
             <p class="tool_til">简介：{{ showTool.til }}</p>
             <p class="tool_url">网址：<a :href="showTool.url" target="_blank">{{ showTool.url }}</a></p>
             <template #footer>
-                <div>
+                <el-button-group>
                     <el-button type="warning" @click="randomToolShow()" v-if="randomBtnVisible">再换一个</el-button>
                     <el-button type="success" @click="openURL(showTool.url)">直接访问</el-button>
                     <el-button type="info" @click="openURL('./page?id='+showTool.id)">独立页面</el-button>
                     <el-button type="primary" @click="shareURL(showTool.url)">分享</el-button>
-                </div>
+                </el-button-group>
             </template>
         </el-dialog>
     </div>
