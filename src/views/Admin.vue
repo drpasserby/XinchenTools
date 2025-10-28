@@ -159,7 +159,8 @@ export default {
         })
     },
     editTool(id){
-      this.editToolForm = this.tools.find(tool => tool.id === id)
+      const tool = this.tools.find(tool => tool.id === id)
+      this.editToolForm = { ...tool }
       this.editFormVisible = true
     },
     editGitTool(){
