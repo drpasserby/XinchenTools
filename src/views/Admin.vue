@@ -8,7 +8,11 @@
       <el-button type="primary" @click="addTool()">快速新增</el-button>
     </div>
     <div class="header_card my_card remove_flex">
-      <el-button type="primary" @click="getTools()">获取</el-button><p>共有<el-text type="success">{{tools.length}}</el-text>个网站</p>
+      <el-button-group>
+        <el-button type="primary" @click="getTools()">获取全部</el-button>
+        <el-button type="warning" @click="getNullTools()">获取空</el-button>
+      </el-button-group>
+      <p>共有<el-text type="success">{{tools.length}}</el-text>个网站</p>
       <el-table :data="tools" stripe border v-loading="loading" style="width: 100%" height="600">
         <el-table-column prop="id" label="ID" sortable/>
         <el-table-column prop="type" label="类型" />
@@ -78,7 +82,7 @@
       </el-form>
       <template #footer>
         <div>
-          <el-button @click="addFormVisible = false">取消</el-button>
+          <el-button @click="editFormVisible = false">取消</el-button>
           <el-button type="primary" @click="editGitTool()">提交</el-button>
         </div>
       </template>
@@ -186,7 +190,16 @@ export default {
         // 最后删掉输出
         console.log(this.tools)
       })
-    }
+    },
+    getNullTools(){
+      this.loading = true
+      axios.get('https://my.wulvxinchen.cn/tools2/api/searchNull.php').then(res=>{
+        this.tools = res.data.data
+        this.loading = false
+        // 最后删掉输出
+        console.log(this.tools)
+      })
+    },
   }
 }
 </script>
