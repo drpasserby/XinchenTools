@@ -167,6 +167,32 @@ export default {
       this.editToolForm = { ...tool }
       this.editFormVisible = true
     },
+    delTool(id){
+      ElMessageBox.confirm(
+        '确定要隐藏该网址吗？',
+        '再次确认',
+        {
+          confirmButtonText: '隐藏',
+          cancelButtonText: '取消',
+          type: 'warning',
+        }
+      ).then(() => {
+        axios.post('https://my.wulvxinchen.cn/tools2/api/delTool.php', { id: id }).then(res=>{
+          if(res.data.code === 200){
+            ElMessage({
+              message: '隐藏成功',
+              type: 'success',
+            });
+            this.getTools()
+          } else {
+            ElMessage({
+              message: '隐藏失败：' + res.data.msg,
+              type: 'error',
+            });
+          }
+        })
+    })
+    },
     editGitTool(){
       ElMessageBox.confirm(
           '确定要修改吗？',
