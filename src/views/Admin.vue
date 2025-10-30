@@ -44,7 +44,7 @@
           <el-input v-model="newToolForm.til" :autosize="{ minRows: 2, maxRows: 6 }" type="textarea"/>
         </el-form-item>
         <el-form-item label="是否可见">
-            <el-switch v-model="newToolForm.isvis" active-value="1" inactive-value="0"/>
+            <el-switch v-model="newToolForm.isvis" :active-value=1 :inactive-value=0 />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -57,7 +57,7 @@
     <el-dialog v-model="editFormVisible" title="编辑网址" width="500" align-center>
       <el-form>
         <el-form-item label="ID">
-          <el-input v-model="editToolForm.id" />
+          <el-input v-model="editToolForm.id" disabled/>
         </el-form-item>
         <el-form-item label="名称">
           <el-input v-model="editToolForm.name" />
@@ -74,7 +74,7 @@
           <el-input v-model="editToolForm.til" :autosize="{ minRows: 2, maxRows: 6 }" type="textarea"/>
         </el-form-item>
         <el-form-item label="是否可见">
-            <el-switch v-model="editToolForm.isvis" active-value="1" inactive-value="0"/>
+            <el-switch v-model="editToolForm.isvis" :active-value=1 :inactive-value=0 />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -107,7 +107,7 @@ export default {
         name: '',
         url: '',
         til: '',
-        isvis: '1'
+        isvis: 1
       },
       editToolForm: {
         id: '',
@@ -115,7 +115,7 @@ export default {
         name: '',
         url: '',
         til: '',
-        isvis: '1'
+        isvis: 1
       },
       tools: [],
     }
@@ -153,7 +153,7 @@ export default {
                 name: '',
                 url: '',
                 til: '',
-                isvis: '1'
+                isvis: 1
               }
             } else {
               ElMessage({
