@@ -92,6 +92,7 @@
 
 <script>
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import { ElMessage, ElMessageBox } from 'element-plus';
 
 export default {
@@ -128,7 +129,7 @@ export default {
         this.$router.push('/')
     },
     logout(){
-        // 清除cookie操作写这里
+        Cookies.remove('xinchentools');
         this.$router.push('/login')
     },
     addTool(){
@@ -144,7 +145,6 @@ export default {
             type: 'warning',
           }
         ).then(() => {
-          // 提交新增请求操作写这里
           axios.post('https://my.wulvxinchen.cn/tools2/api/addTool.php', this.newToolForm).then(res=>{
             if(res.data.code === 200){
               ElMessage({
