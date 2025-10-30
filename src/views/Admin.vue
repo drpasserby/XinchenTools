@@ -29,9 +29,6 @@
     </div>
     <el-dialog v-model="addFormVisible" title="添加网址" width="500" align-center>
       <el-form>
-        <el-form-item label="ID">
-          <el-input v-model="newToolForm.id" />
-        </el-form-item>
         <el-form-item label="名称">
           <el-input v-model="newToolForm.name" />
         </el-form-item>
@@ -106,12 +103,11 @@ export default {
       editFormVisible: false,
       toolTypes: ['实用', '趣味', '游戏', '其他'],
       newToolForm: {
-        id: '',
         type: '',
         name: '',
         url: '',
         til: '',
-        isvis: ''
+        isvis: '1'
       },
       editToolForm: {
         id: '',
@@ -119,7 +115,7 @@ export default {
         name: '',
         url: '',
         til: '',
-        isvis: ''
+        isvis: '1'
       },
       tools: [],
     }
@@ -152,6 +148,13 @@ export default {
                 type: 'success',
               });
               this.getTools()
+              this.newToolForm = {
+                type: '',
+                name: '',
+                url: '',
+                til: '',
+                isvis: '1'
+              }
             } else {
               ElMessage({
                 message: '添加失败：' + res.data.msg,
