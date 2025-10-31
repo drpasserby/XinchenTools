@@ -38,7 +38,7 @@
                                 </svg>
                             </template>
                             <template #append>
-                                <el-button>搜索</el-button>
+                                <el-button @click="searchToolsBtn">搜索</el-button>
                             </template>
                         </el-input>
                     </div>
@@ -79,6 +79,18 @@
                 </el-button-group>
             </template>
         </el-dialog>
+        <el-dialog v-model="searchVisible" title="搜索结果" width="500" align-center>
+            <p>共搜到<el-text type="success">{{searchTools.length}}</el-text>个包含关键词<el-text type="warning">“{{searchInput}}”</el-text>网站</p>
+            <el-table :data="searchTools" stripe border style="width: 100%" height="700">
+                <el-table-column prop="name" label="名称" />
+                <el-table-column prop="type" label="类型" />
+                <el-table-column fixed="right" label="操作">
+                    <template #default="{row}">
+                        <el-button link type="primary" @click="toolOpenInfo(row.id)">打开</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </el-dialog>
     </div>
 </template>
 
@@ -91,23 +103,13 @@ export default {
     return {
         toolWinVisible: false,
         randomBtnVisible: false,
+        searchVisible: false,
         loading: false,
         searchInput: '',
-        showTool:{
-            "id": 1,
-            "type": "实用",
-            "name": "申论生成器",
-            "url": "https://sojo.im/slscq/",
-            "til": "在线生成申论"
-        },
-        randomTool: {
-            "id": 1,
-            "type": "实用",
-            "name": "申论生成器",
-            "url": "https://sojo.im/slscq/",
-            "til": "在线生成申论"
-        },
-        tools: []
+        showTool:{},
+        randomTool: {},
+        tools: [],
+        searchTools: []
     };},
     methods: {
         getTools(){
@@ -136,7 +138,19 @@ export default {
         shareURL(url){
             // 分享功能，复制到粘贴板，待补充
         },
-        // 测试函数
+        searchToolsBtn(){
+            const lowerKeyword = this.searchInput.toLowerCase().trim();
+            this.searchTools = this.tools.filter(tool => {
+                return (
+                    (tool.name && tool.name.toLowerCase().includes(lowerKeyword)) || 
+                    (tool.type && tool.type.toLowerCase().includes(lowerKeyword)) ||
+                    (tool.til && tool.til.toLowerCase().includes(lowerKeyword)) ||
+                    (tool.url && tool.url.toLowerCase().includes(lowerKeyword))
+                )
+            })
+            this.searchVisible = true
+        },
+        // 测试函数，记得删除
         deltool(){
             this.tools.pop()
         }
