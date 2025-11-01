@@ -139,6 +139,13 @@ export default {
             // 分享功能，复制到粘贴板，待补充
         },
         searchToolsBtn(){
+            if (this.searchInput.trim() === ''){
+                this.$message({
+                    message: '请输入搜索关键词',
+                    type: 'warning'
+                });
+                return;
+            }
             const lowerKeyword = this.searchInput.toLowerCase().trim();
             this.searchTools = this.tools.filter(tool => {
                 return (
