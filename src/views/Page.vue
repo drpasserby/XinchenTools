@@ -40,13 +40,7 @@ export default {
   data(){
     return{
         loading: false,
-        tool: {
-            "id": 1,
-            "type": "实用",
-            "name": "申论生成器",
-            "url": "https://sojo.im/slscq/",
-            "til": "在线生成申论"
-        }
+        tool: {}
     }
   },
   methods:{
