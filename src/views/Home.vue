@@ -75,7 +75,7 @@
                     <el-button type="warning" @click="randomToolShow()" v-if="randomBtnVisible">再换一个</el-button>
                     <el-button type="success" @click="openURL(showTool.url)">直接访问</el-button>
                     <el-button type="info" @click="openURL('./page?id='+showTool.id)">独立页面</el-button>
-                    <el-button type="primary" @click="shareURL(showTool.url)">分享</el-button>
+                    <el-button type="primary" @click="shareURL(showTool.id)">分享</el-button>
                 </el-button-group>
             </template>
         </el-dialog>
@@ -106,6 +106,9 @@ export default {
         searchVisible: false,
         loading: false,
         searchInput: '',
+        webSettings: {
+            autoJump: false
+        },
         showTool:{},
         randomTool: {},
         tools: [],
@@ -135,8 +138,22 @@ export default {
         openURL(url){
             window.open(url, '_blank')
         },
-        shareURL(url){
-            // 分享功能，复制到粘贴板，待补充
+        shareURL(id){
+            const input = document.createElement('input')
+            if(this.webSettings.autoJump == true){
+                input.value = 'https://my.wulvxinchen.cn/tools2/page?id=' + id + "&auto=1"
+            }
+            else{
+                input.value = 'https://my.wulvxinchen.cn/tools2/page?id=' + id
+            }
+            document.body.appendChild(input)
+            input.select()
+            document.execCommand('Copy')
+            document.body.removeChild(input)
+            this.$message({
+                    message: '已复制网址到剪贴板,快去分享吧!',
+                    type: 'success'
+                });
         },
         searchToolsBtn(){
             if (this.searchInput.trim() === ''){
