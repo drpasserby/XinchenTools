@@ -141,10 +141,10 @@ export default {
         shareURL(id){
             const input = document.createElement('input')
             if(this.webSettings.autoJump == true){
-                input.value = 'https://my.wulvxinchen.cn/tools2/page?id=' + id + "&auto=1"
+                input.value = window.location.href + 'page?id=' + id + "&auto=1"
             }
             else{
-                input.value = 'https://my.wulvxinchen.cn/tools2/page?id=' + id
+                input.value = window.location.href + 'page?id=' + id
             }
             document.body.appendChild(input)
             input.select()
