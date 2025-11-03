@@ -5,6 +5,7 @@
 | 1    | Admin    | 编辑提交功能           |
 | 2    | Login    | 登录 cookie 验证       |
 | 3    | Home\Page     | 分享功能               |
+| 4    | Home\Page\About     | 读取和设置本地设置参数               |
 
 # 待修复 bug
 
