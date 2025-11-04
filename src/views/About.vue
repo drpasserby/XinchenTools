@@ -40,6 +40,9 @@
                     >
                 </el-input>
             </el-form-item>
+            <el-form-item label="打开主页是否立即抽卡">
+                <el-switch v-model="settings.autoRandomTool"/>
+            </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="saveSettings">保存</el-button>
                 <el-button type="success" @click="backupSettings">恢复默认设置</el-button>
@@ -65,7 +68,8 @@ export default {
         timeText: '这里已经被尘埃覆盖了9999天99小时99分99秒',
         settings:{
             autoRedirect: true,
-            redirectDelay: 3000
+            redirectDelay: 3000,
+            autoRandomTool:false
         }
     }
   },
