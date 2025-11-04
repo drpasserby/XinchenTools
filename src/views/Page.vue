@@ -23,7 +23,7 @@
         <p class="tool_til">简介：{{ tool.til }}</p>
         <p class="tool_url">网址：<a :href="tool.url" target="_blank">{{ tool.url }}</a></p>
         <div>
-            <el-button type="primary" >分享</el-button>
+            <el-button type="primary" @click="shareURL(tool.id)">分享</el-button>
             <el-button type="success" @click="openURL(tool.url)">访问</el-button>
         </div>
     </div>
@@ -40,24 +40,44 @@ export default {
   data(){
     return{
         loading: false,
-        tool: {}
+        tool: {},
+        webSettings: {
+          autoJump: false
+        },
     }
   },
   methods:{
     toPush(url){
-        this.$router.push(url)
+      this.$router.push(url)
     },
     openURL(url){
-        window.open(url, '_blank')
+      window.open(url, '_blank')
     },
     getTool(){
-        this.loading = true
-        axios.get('https://my.wulvxinchen.cn/tools2/api/searchID.php?id='+this.tool.id).then(res=>{
-            this.tool = res.data.data[0]
-            this.loading = false
-            // 最后删掉输出
-            console.log(this.tool)
-        })
+      this.loading = true
+      axios.get('https://my.wulvxinchen.cn/tools2/api/searchID.php?id='+this.tool.id).then(res=>{
+          this.tool = res.data.data[0]
+          this.loading = false
+          // 最后删掉输出
+          console.log(this.tool)
+      })
+    },
+    shareURL(id){
+      const input = document.createElement('input')
+      if(this.webSettings.autoJump == true){
+          input.value = window.location.href + "&auto=1"
+      }
+      else{
+          input.value = window.location.href
+      }
+      document.body.appendChild(input)
+      input.select()
+      document.execCommand('Copy')
+      document.body.removeChild(input)
+      this.$message({
+              message: '已复制网址到剪贴板,快去分享吧!',
+              type: 'success'
+          });
     }
   },
   mounted(){
