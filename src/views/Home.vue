@@ -106,8 +106,10 @@ export default {
         searchVisible: false,
         loading: false,
         searchInput: '',
-        webSettings: {
-            autoJump: false
+        settings:{
+            autoRedirect: true,
+            redirectDelay: 3000,
+            autoRandomTool:false
         },
         showTool:{},
         randomTool: {},
@@ -115,6 +117,19 @@ export default {
         searchTools: []
     };},
     methods: {
+        getSettings(){
+            const savedSettings = localStorage.getItem('settings');
+            if (savedSettings) {
+                this.settings = JSON.parse(savedSettings);
+            }
+            else{
+            this.settings = {
+                autoRedirect: true,
+                redirectDelay: 3000,
+                autoRandomTool:false
+            };
+        }
+        },
         getTools(){
             this.loading = true
             axios.get('https://my.wulvxinchen.cn/tools2/api/searchAll.php').then(res=>{
@@ -140,7 +155,7 @@ export default {
         },
         shareURL(id){
             const input = document.createElement('input')
-            if(this.webSettings.autoJump == true){
+            if(this.settings.autoRedirect == true){
                 input.value = window.location.href + 'page?id=' + id + "&auto=1"
             }
             else{
@@ -180,7 +195,8 @@ export default {
         }
     },
     mounted(){
-        this.getTools()
+        this.getTools(),
+        this.getSettings()
     }
 }
 </script>
