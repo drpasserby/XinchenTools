@@ -90,7 +90,8 @@ export default {
     backupSettings(){
         this.settings = {
             autoRedirect: true,
-            redirectDelay: 3000
+            redirectDelay: 3000,
+            autoRandomTool:false
         };
         localStorage.setItem('settings', JSON.stringify(this.settings));
         this.$message({
