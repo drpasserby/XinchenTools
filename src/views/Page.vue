@@ -41,12 +41,23 @@ export default {
     return{
         loading: false,
         tool: {},
-        webSettings: {
-          autoJump: false
+        settings:{
+            autoRedirect: true,
+            redirectDelay: 3000,
+            autoRandomTool:false
         },
     }
   },
   methods:{
+    getSettings(){
+      const savedSettings = localStorage.getItem('settings');
+      if (savedSettings) {
+        this.settings = JSON.parse(savedSettings);
+      }
+      else{
+        localStorage.setItem('settings', JSON.stringify(this.settings));
+      }
+    },
     toPush(url){
       this.$router.push(url)
     },
@@ -62,9 +73,9 @@ export default {
           console.log(this.tool)
       })
     },
-    shareURL(id){
+    shareURL(){
       const input = document.createElement('input')
-      if(this.webSettings.autoJump == true){
+      if(this.settings.autoRedirect == true){
           input.value = window.location.href + "&auto=1"
       }
       else{
@@ -82,7 +93,8 @@ export default {
   },
   mounted(){
     this.tool.id = this.$route.params.id || this.$route.query.id;
-    this.getTool()
+    this.getTool(),
+    this.getSettings()
   }
 }
 </script>
