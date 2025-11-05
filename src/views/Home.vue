@@ -123,12 +123,8 @@ export default {
                 this.settings = JSON.parse(savedSettings);
             }
             else{
-            this.settings = {
-                autoRedirect: true,
-                redirectDelay: 3000,
-                autoRandomTool:false
-            };
-        }
+                localStorage.setItem('settings', JSON.stringify(this.settings));
+            }
         },
         getTools(){
             this.loading = true
