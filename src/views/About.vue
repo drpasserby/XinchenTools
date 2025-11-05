@@ -74,6 +74,15 @@ export default {
     }
   },
   methods:{
+    getSettings(){
+        const savedSettings = localStorage.getItem('settings');
+        if (savedSettings) {
+            this.settings = JSON.parse(savedSettings);
+        }
+        else{
+            this.saveSettings();
+        }
+    },
     backTools(){
         this.$router.push('/')
     },
@@ -122,6 +131,7 @@ export default {
     }
   },
   mounted(){
+    this.getSettings(),
     setInterval(this.getNewTime, 1000)
   }
 }
