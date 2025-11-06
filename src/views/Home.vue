@@ -193,6 +193,11 @@ export default {
     mounted(){
         this.getTools(),
         this.getSettings()
+        if(this.settings.autoRandomTool == true){
+            setTimeout(() => {
+                this.randomToolShow()
+            }, 1000);
+        }
     }
 }
 </script>
