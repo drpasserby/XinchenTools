@@ -5,7 +5,6 @@
 | 1    | Admin    | 编辑提交功能           |
 | 2    | Login    | 登录 cookie 验证       |
 | 3    | Home\Page\About     | 读取和设置本地设置参数               |
-| 4    |   Home\About   |       设置参数打开主页立即抽卡，默认false不抽卡         |
 
 # 待修复 bug
 
