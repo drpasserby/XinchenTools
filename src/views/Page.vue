@@ -32,6 +32,7 @@
 
 <script>
 import axios from 'axios';
+import { ElMessage, ElMessageBox } from 'element-plus';
 
 export default {
   name: 'Page',
@@ -58,6 +59,24 @@ export default {
         localStorage.setItem('settings', JSON.stringify(this.settings));
       }
     },
+    autoJump(){
+      const toolUrl = this.tool.url;
+      if(this.$route.query.auto == '1' ){
+        setTimeout(function(){
+          ElMessageBox.confirm(
+            '即将跳转到网站，确认吗？',
+            '自动跳转',
+            {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'success',
+            }
+          ).then(() => {
+            window.open(toolUrl, '_blank')
+          })
+        }, this.settings.redirectDelay);
+      }
+    },
     toPush(url){
       this.$router.push(url)
     },
@@ -69,9 +88,11 @@ export default {
       axios.get('https://my.wulvxinchen.cn/tools2/api/searchID.php?id='+this.tool.id).then(res=>{
           this.tool = res.data.data[0]
           this.loading = false
+          this.autoJump()
           // 最后删掉输出
           console.log(this.tool)
       })
+      
     },
     shareURL(){
       const input = document.createElement('input')
