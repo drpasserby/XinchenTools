@@ -206,8 +206,20 @@ export default {
             type: 'warning',
           }
         ).then(() => {
-          // 提交编辑请求操作写这里
-          alert(Cookies.get('xinchentools_auth_token'))
+          axios.post('https://my.wulvxinchen.cn/tools2/api/editTool.php', this.editToolForm).then(res=>{
+            if(res.data.code === 200){
+              ElMessage({
+                message: '修改成功',
+                type: 'success',
+              });
+              this.getTools()
+            } else {
+              ElMessage({
+                message: '修改失败：' + res.data.msg,
+                type: 'error',
+              });
+            }
+          })
           this.editFormVisible = false
       })
     },
