@@ -300,6 +300,9 @@ export default {
     text-align: center;
     gap: 16px;
   }
-  
+  .header_card_logo strong{
+    font-size: 1.5em;
+    margin-left: .3em;
+    }
 }
 </style>
