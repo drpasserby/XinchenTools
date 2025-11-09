@@ -292,4 +292,14 @@ export default {
     padding: .3em;
     border: 1px dashed #8b8b8b;
 }
+
+/* 手机端适配 */
+@media (max-width: 768px) {
+  .header_card {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+  
+}
 </style>
