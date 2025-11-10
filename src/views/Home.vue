@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="header_card my_card">
+        <div class="header_card my_card header_card_remove_flex">
             <div class="header_card_logo">
                 <a href="./about" >
                     <img src="https://my.wulvxinchen.cn/pictures/logo/logo.webp" alt="xinchen" class="header_card_img">
@@ -295,7 +295,7 @@ export default {
 
 /* 手机端适配 */
 @media (max-width: 768px) {
-  .header_card {
+  .header_card_remove_flex {
     flex-direction: column;
     text-align: center;
     gap: 16px;
