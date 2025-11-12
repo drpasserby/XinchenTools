@@ -6,7 +6,7 @@
             <el-button type="success" @click="openURL('https://wulvxinchen.cn/')">返回导航站</el-button>
         </el-button-group>
     </div>
-    <div class="header_card my_card">
+    <div class="header_card my_card header_card_remove_flex">
             <div class="header_card_logo">
                 <a href="./login" ><img src="https://my.wulvxinchen.cn/pictures/logo/logo.webp" alt="xinchen" class="header_card_img"></a>
                 <strong>心尘的工具集</strong>
