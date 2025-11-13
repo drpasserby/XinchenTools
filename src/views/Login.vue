@@ -40,7 +40,6 @@
             <el-form-item>
                 <el-button type="primary" @click="login">登录</el-button>
                 <el-button type="success" @click="clearAll">清除本地密码</el-button>
-                <el-button type="primary" @click="autologin">模拟登录</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -63,9 +62,6 @@ export default {
     }
   },
   methods:{
-    autologin(){
-        this.$router.push('/admin')
-    },
     backTools(){
         this.$router.push('/')
     },
