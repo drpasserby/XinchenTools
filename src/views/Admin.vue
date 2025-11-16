@@ -5,6 +5,7 @@
       <el-button type="danger" @click="logout()">退出</el-button>
     </div>
     <div class="header_card my_card">
+      <el-button type="primary" @click="testCookie()">测试Cookie</el-button>
       <el-button type="primary" @click="addTool()">快速新增</el-button>
     </div>
     <div class="header_card my_card remove_flex">
@@ -127,6 +128,9 @@ export default {
     logout(){
         Cookies.remove('xinchentools', { path: '/', domain:'my.wulvxinchen.cn' });
         this.$router.push('/login')
+    },
+    testCookie(){
+
     },
     addTool(){
         this.addFormVisible = true
