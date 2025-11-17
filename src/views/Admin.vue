@@ -5,8 +5,10 @@
       <el-button type="danger" @click="logout()">退出</el-button>
     </div>
     <div class="header_card my_card">
-      <el-button type="primary" @click="testCookie()">测试Cookie</el-button>
-      <el-button type="primary" @click="addTool()">快速新增</el-button>
+      <el-button-group>
+        <el-button type="primary" @click="testCookie()">测试Cookie</el-button>
+        <el-button type="primary" @click="addTool()">快速新增</el-button>
+      </el-button-group>
     </div>
     <div class="header_card my_card remove_flex">
       <el-button-group>
@@ -130,7 +132,19 @@ export default {
         this.$router.push('/login')
     },
     testCookie(){
-
+        const cookieValue = Cookies.get('xinchentools');
+        if (cookieValue !== undefined) {
+            ElMessage({
+                message: `Cookie存在，值为: ${cookieValue}`,
+                type: 'success',
+            });
+            
+        } else {
+            ElMessage({
+                message: 'Cookie不存在',
+                type: 'error',
+            });
+        }
     },
     addTool(){
         this.addFormVisible = true
