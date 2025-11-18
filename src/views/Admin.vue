@@ -138,7 +138,25 @@ export default {
                 message: `Cookie存在，值为: ${cookieValue}`,
                 type: 'success',
             });
-            
+            axios.post('https://my.wulvxinchen.cn/tools2/api/testCookie.php', {
+            }).then(res => {
+                if (res.data.code === 200) {
+                    ElMessage({
+                        message: 'Cookie验证成功',
+                        type: 'success',
+                    });
+                } else {
+                    ElMessage({
+                        message: '失败：' + res.data.msg,
+                        type: 'error',
+                    });
+                }
+            }).catch(err => {
+                ElMessage({
+                    message: '网络异常，请稍后再试',
+                    type: 'error',
+                });
+            });
         } else {
             ElMessage({
                 message: 'Cookie不存在',
