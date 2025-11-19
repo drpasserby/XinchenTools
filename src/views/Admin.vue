@@ -133,14 +133,14 @@ export default {
     },
     testCookie(){
         const cookieValue = Cookies.get('xinchentools');
-        if (cookieValue !== undefined) {
+        if (cookieValue != undefined) {
             ElMessage({
                 message: `Cookie存在，值为: ${cookieValue}`,
                 type: 'success',
             });
             axios.post('https://my.wulvxinchen.cn/tools2/api/testCookie.php', {
             }).then(res => {
-                if (res.data.code === 200) {
+                if (res.code == 200) {
                     ElMessage({
                         message: 'Cookie验证成功',
                         type: 'success',
