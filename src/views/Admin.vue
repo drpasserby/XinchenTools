@@ -138,14 +138,14 @@ export default {
                 message: `Cookie存在，值为: ${cookieValue}`,
                 type: 'success',
             });
-            axios.post('https://my.wulvxinchen.cn/tools2/api/testCookie.php', {
+            axios.get('https://my.wulvxinchen.cn/tools2/api/testCookie.php', {
             }).then(res => {
-                if (res.code == 200) {
+                if (res.data.code == 200) {
                     ElMessage({
                         message: 'Cookie验证成功',
                         type: 'success',
                     });
-                } else {
+                } else if(res.data.code == 500) {
                     ElMessage({
                         message: '失败：' + res.data.msg,
                         type: 'error',
