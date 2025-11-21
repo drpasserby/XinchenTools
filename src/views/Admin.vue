@@ -128,7 +128,7 @@ export default {
         this.$router.push('/')
     },
     logout(){
-        Cookies.remove('xinchentools', { path: '/', domain:'my.wulvxinchen.cn' });
+        Cookies.remove('xinchentools');
         this.$router.push('/login')
     },
     testCookie(){
