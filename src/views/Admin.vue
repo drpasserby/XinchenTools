@@ -134,29 +134,25 @@ export default {
     testCookie(){
         const cookieValue = Cookies.get('xinchentools');
         if (cookieValue != undefined) {
-            ElMessage({
-                message: `Cookie存在，值为: ${cookieValue}`,
-                type: 'success',
-            });
-            axios.get('https://my.wulvxinchen.cn/tools2/api/testCookie.php', {
-            }).then(res => {
-                if (res.data.code == 200) {
-                    ElMessage({
-                        message: 'Cookie验证成功',
-                        type: 'success',
-                    });
-                } else if(res.data.code == 500) {
-                    ElMessage({
-                        message: '失败：' + res.data.msg,
-                        type: 'error',
-                    });
-                }
-            }).catch(err => {
-                ElMessage({
-                    message: '网络异常，请稍后再试',
-                    type: 'error',
-                });
-            });
+          axios.get('https://my.wulvxinchen.cn/tools2/api/testCookie.php', {
+          }).then(res => {
+              if (res.data.code == 200) {
+                  ElMessage({
+                      message: 'Cookie验证成功,值为: ${cookieValue}',
+                      type: 'success',
+                  });
+              } else if(res.data.code == 500) {
+                  ElMessage({
+                      message: '失败：' + res.data.msg,
+                      type: 'error',
+                  });
+              }
+          }).catch(err => {
+              ElMessage({
+                  message: '网络异常，请稍后再试',
+                  type: 'error',
+              });
+          });
         } else {
             ElMessage({
                 message: 'Cookie不存在',
