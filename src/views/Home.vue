@@ -18,13 +18,13 @@
         </div>
         <div class="body_card">
             <el-row :gutter="10">
-                <el-col :xs="24" :xl="8">
+                <el-col :xs="24" :lg="8" :xl="8">
                     <div class="my_card body_card_item" v-loading="loading">
                         <h3>状态</h3>
                         <p>共有{{tools.length}}个网站</p>
                     </div>
                 </el-col>
-                <el-col :xs="24" :xl="8">
+                <el-col :xs="24" :lg="8" :xl="8">
                     <div class="my_card body_card_item">
                         <h3>搜索</h3>
                         <el-input
@@ -43,7 +43,7 @@
                         </el-input>
                     </div>
                 </el-col>
-                <el-col :xs="24" :xl="8">
+                <el-col :xs="24" :lg="8" :xl="8">
                     <div class="my_card body_card_item">
                         <h3>随机一站</h3>
                         <el-button type="primary" @click="randomToolShow">抽卡</el-button>
