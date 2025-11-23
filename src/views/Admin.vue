@@ -176,7 +176,7 @@ export default {
           axios.post('https://my.wulvxinchen.cn/tools2/api/addTool.php', this.newToolForm).then(res=>{
             if(res.data.code === 200){
               ElMessage({
-                message: '添加成功',
+                message: res.data.msg,
                 type: 'success',
               });
               this.getTools()
@@ -241,7 +241,7 @@ export default {
           axios.post('https://my.wulvxinchen.cn/tools2/api/editTool.php', this.editToolForm).then(res=>{
             if(res.data.code === 200){
               ElMessage({
-                message: '修改成功',
+                message: res.data.msg,
                 type: 'success',
               });
               this.getTools()
