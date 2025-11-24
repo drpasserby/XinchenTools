@@ -88,6 +88,20 @@ export default {
       axios.get('https://my.wulvxinchen.cn/tools2/api/searchID.php?id='+this.tool.id).then(res=>{
           this.tool = res.data.data[0]
           this.loading = false
+          if(res.data.resultCode == 404){
+            this.tool = {
+              id: 'ERROR',
+              type: 'ERROR',
+              name: 'ERROR',
+              url: 'ERROR',
+              til: 'ERROR',
+              isvis: 0
+            }
+            ElMessage({
+              message: '获取工具失败：' + res.data.msg,
+              type: 'error'
+            });
+          }
           this.autoJump()
           // 最后删掉输出
           console.log(this.tool)
