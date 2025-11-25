@@ -138,7 +138,7 @@ export default {
           }).then(res => {
               if (res.data.code == 200) {
                   ElMessage({
-                      message: 'Cookie验证成功,值为: ${cookieValue}',
+                      message: 'Cookie验证成功,值为:' + cookieValue,
                       type: 'success',
                   });
               } else if(res.data.code == 500) {
