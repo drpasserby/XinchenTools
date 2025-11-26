@@ -10,6 +10,22 @@
         <el-button type="primary" @click="addTool()">快速新增</el-button>
       </el-button-group>
     </div>
+    <div class="header_card my_card">
+        <el-input
+            v-model="searchInput"
+            placeholder="输入关键词"
+            class="input-with-select"
+            >
+            <template #prepend>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                </svg>
+            </template>
+            <template #append>
+                <el-button @click="searchToolsBtn">搜索</el-button>
+            </template>
+        </el-input>
+    </div>
     <div class="header_card my_card remove_flex">
       <el-button-group>
         <el-button type="primary" @click="getTools()">获取全部</el-button>
