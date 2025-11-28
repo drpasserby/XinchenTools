@@ -98,6 +98,7 @@
       </el-form>
       <template #footer>
         <div>
+          <el-button type="success" @click="openURL(editToolForm.url)">访问</el-button>
           <el-button @click="editFormVisible = false">取消</el-button>
           <el-button type="primary" @click="editGitTool()">提交</el-button>
         </div>
@@ -158,6 +159,9 @@ export default {
   methods:{
     backTools(){
         this.$router.push('/')
+    },
+    openURL(url){
+      window.open(url, '_blank')
     },
     logout(){
         Cookies.remove('xinchentools');
