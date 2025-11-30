@@ -4,6 +4,7 @@
 | ---- | -------- | ---------------------- |
 | 1    | Login    | 检测到本地有可用Cookie的时候自动跳转Admin模块           |
 | 2    | Admin    | 客户端验证Cookie会返回过期的日期           |
+| 3    | Admin    | 优化合并getTools和getNullTools函数（合并，修改参数）           |
 | 3    | Admin    | Cookie管理（低优先级）           |
 
 # 待修复 bug
