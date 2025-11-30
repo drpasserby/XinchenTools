@@ -16,7 +16,7 @@
             <span style="font-weight:600">更新，更美观，更现代化的心尘工具集！</span>
         </div>
     </div>
-    <div class="header_card my_card tool_card remove_flex" v-loading="loading">
+    <div class="header_card my_card tool_card remove_flex" v-loading="loading" v-if="tool.id != 'ERROR'">
         <p class="tool_name"><strong>{{ tool.name }}</strong></p>
         <p class="tool_type"><strong>数据库序号:{{ tool.id }}</strong></p>
         <p class="tool_type"><strong>类型:{{ tool.type }}</strong></p>
@@ -26,6 +26,12 @@
             <el-button type="primary" @click="shareURL(tool.id)">分享</el-button>
             <el-button type="success" @click="openURL(tool.url)">访问</el-button>
         </div>
+    </div>
+    <div class="header_card my_card tool_card remove_flex" v-else>
+      <div style="text-align: center;" v-for="n in 5" :key="n">
+        <img src="https://my.wulvxinchen.cn/tools2/pubilc/error.png" alt="404" style="max-width: 100%;" v-show="errorts">
+        <img src="https://my.wulvxinchen.cn/tools2/pubilc/error2.png" alt="404" style="max-width: 100%;" v-show="!errorts">
+      </div>
     </div>
   </div>
 </template>
@@ -42,6 +48,7 @@ export default {
     return{
         loading: false,
         tool: {},
+        errorts:'',
         settings:{
             autoRedirect: true,
             redirectDelay: 3000,
@@ -97,6 +104,7 @@ export default {
               til: 'ERROR',
               isvis: 0
             }
+            this.errorImg()
             ElMessage({
               message: '获取工具失败：' + res.data.msg,
               type: 'error'
@@ -124,6 +132,11 @@ export default {
               message: '已复制网址到剪贴板,快去分享吧!',
               type: 'success'
           });
+    },
+    errorImg(){
+      setInterval(()=>{
+        this.errorts = !this.errorts
+      },1000)
     }
   },
   mounted(){
