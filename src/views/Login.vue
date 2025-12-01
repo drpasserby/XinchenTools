@@ -48,6 +48,8 @@
 
 <script>
 import axios from 'axios';
+import Cookies from 'js-cookie';
+import { ElMessage } from 'element-plus';
 export default {
   name: 'Login',
   components: {
@@ -106,6 +108,37 @@ export default {
         message: '清除成功',
         type: 'success'
       });
+    },
+    fetchCookies(){
+      const cookieValue = Cookies.get('xinchentools');
+      if (cookieValue != undefined) {
+        axios.get('https://my.wulvxinchen.cn/tools2/api/testCookie.php', {
+          }).then(res => {
+            if (res.data.code == 200) {
+              ElMessage({
+                message: 'Cookie有效,即将登录跳转',
+                type: 'success',
+              });
+              this.$router.push('/admin');
+            } else if(res.data.code == 500) {
+              Cookies.remove('xinchentools');
+              ElMessage({
+                message: res.data.msg,
+                type: 'error',
+              });
+              }
+          }).catch(err => {
+            ElMessage({
+                message: '验证Cookie可用性网络异常，请稍后再试',
+                type: 'error',
+            });
+          });
+        } else {
+          ElMessage({
+              message: 'Cookie不存在，请登录',
+              type: 'error',
+          });
+        }
     }
   },
   mounted(){
@@ -115,7 +148,8 @@ export default {
       this.loginForm.username = userinfo.username;
       this.loginForm.password = userinfo.password;
       this.isRemeber = true;
-    }
+    };
+    this.fetchCookies();
   }
 }
 </script>
