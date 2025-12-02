@@ -28,8 +28,8 @@
     </div>
     <div class="header_card my_card remove_flex">
       <el-button-group>
-        <el-button type="primary" @click="getTools()">获取全部</el-button>
-        <el-button type="warning" @click="getNullTools()">获取空</el-button>
+        <el-button type="primary" @click="getTools('searchAll.php')">获取全部</el-button>
+        <el-button type="warning" @click="getTools('searchNull.php')">获取空</el-button>
       </el-button-group>
       <p>共有<el-text type="success">{{tools.length}}</el-text>个网站</p>
       <el-table :data="tools" stripe border v-loading="loading" style="width: 100%" height="600">
@@ -215,7 +215,7 @@ export default {
                 message: res.data.msg,
                 type: 'success',
               });
-              this.getTools()
+              this.getTools('searchAll.php')
               this.newToolForm = {
                 type: '',
                 name: '',
@@ -254,7 +254,7 @@ export default {
               message: '隐藏成功',
               type: 'success',
             });
-            this.getTools()
+            this.getTools('searchAll.php')
           } else {
             ElMessage({
               message: '隐藏失败：' + res.data.msg,
@@ -280,7 +280,7 @@ export default {
                 message: res.data.msg,
                 type: 'success',
               });
-              this.getTools()
+              this.getTools('searchAll.php')
             } else {
               ElMessage({
                 message: '修改失败：' + res.data.msg,
@@ -310,18 +310,9 @@ export default {
       })
       this.searchVisible = true
     },
-    getTools(){
+    getTools(url){
       this.loading = true
-      axios.get('https://my.wulvxinchen.cn/tools2/api/searchAll.php').then(res=>{
-        this.tools = res.data.data
-        this.loading = false
-        // 最后删掉输出
-        console.log(this.tools)
-      })
-    },
-    getNullTools(){
-      this.loading = true
-      axios.get('https://my.wulvxinchen.cn/tools2/api/searchNull.php').then(res=>{
+      axios.get('https://my.wulvxinchen.cn/tools2/api/' + url).then(res=>{
         this.tools = res.data.data
         this.loading = false
         // 最后删掉输出
