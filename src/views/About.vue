@@ -15,15 +15,21 @@
             <span style="font-weight:600">更新，更美观，更现代化的心尘工具集！</span>
             </div>
     </div>
-    <div class="header_card my_card">
+    <div class="header_card my_card remove_flex">
+        <h3>关于</h3>
+        <p>感谢使用心尘的工具集！这个网站倾注我的努力和知识，也希望这个网站的工具能够给你的学习、工作、生活带来积极的作用。</p>
+        <p>总之，期待与你的每一次相遇！</p>
+        <p>祝你昨天、今天、明天开心，幸福！</p>
+    </div>
+    <div class="header_card my_card remove_flex">
+        <h3>求赞</h3>
         <span style="font-weight:600">
             喜欢可以在
             <a href="https://github.com/drpasserby/XinchenTools" class="issues_link">GitHub</a>
             给个☆Star！<br><br>
             如果有添加/下架/举报/反馈/支持等需求的请在
             <a href="https://github.com/drpasserby/XinchenWebTools/issues" class="issues_link">反馈</a>
-            这里发布一个Issue，<br>
-            这会自动通过邮件快速告知我。
+            这里发布一个Issue，系统会自动通过邮件快速告知我。
         </span>
     </div>
     <div class="header_card my_card remove_flex">
