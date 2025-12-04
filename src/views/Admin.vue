@@ -136,7 +136,7 @@ export default {
       editFormVisible: false,
       searchVisible: false,
       searchInput: '',
-      toolTypes: ['实用', '趣味', '游戏', '其他'],
+      toolTypes: ['工具', '实用', '趣味', '游戏', '资源', '其他'],
       newToolForm: {
         type: '',
         name: '',
