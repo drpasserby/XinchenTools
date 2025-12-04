@@ -6,8 +6,9 @@
     </div>
     <div class="header_card my_card">
       <el-button-group>
-        <el-button type="primary" @click="testCookie()">测试Cookie</el-button>
         <el-button type="primary" @click="addTool()">快速新增</el-button>
+        <el-button type="primary" @click="testCookie()">测试Cookie</el-button>
+        <el-button type="primary" @click="testIP()">测试IP/UA</el-button>
       </el-button-group>
     </div>
     <div class="header_card my_card">
@@ -195,6 +196,21 @@ export default {
                 type: 'error',
             });
         }
+    },
+    testIP(){
+      axios.get('https://my.wulvxinchen.cn/tools2/api/testIP.php', {
+      }).then(res => {
+        if (res.data.code == 200) {
+          ElMessageBox.alert(
+            '当前IP地址为:' + res.data.ip + ',\n\n当前设备UA为:' + res.data.ua,
+            'IP/UA信息',
+            {
+              confirmButtonText: '确定',
+              type: 'success',
+            }
+          );
+        }
+      });
     },
     addTool(){
         this.addFormVisible = true
