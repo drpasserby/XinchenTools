@@ -131,8 +131,6 @@ export default {
             axios.get('https://my.wulvxinchen.cn/tools2/api/searchAll.php').then(res=>{
                 this.tools = res.data.data.slice().reverse()
                 this.loading = false
-                // 最后删掉输出
-                console.log(this.tools)
             })
         },
         randomToolShow(){
@@ -185,10 +183,6 @@ export default {
             })
             this.searchVisible = true
         },
-        // 测试函数，记得删除
-        deltool(){
-            this.tools.pop()
-        }
     },
     mounted(){
         this.getTools(),
