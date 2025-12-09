@@ -33,6 +33,10 @@
         <img src="https://my.wulvxinchen.cn/tools2/pubilc/error2.png" alt="404" style="max-width: 100%;" v-show="!errorts">
       </div>
     </div>
+    <div class="header_card my_card">
+      <el-button type="warning" @click="toPastNext(-1)">上一个</el-button>
+      <el-button type="success" @click="toPastNext(1)">下一个</el-button>
+    </div>
   </div>
 </template>
 
@@ -83,6 +87,12 @@ export default {
           })
         }, this.settings.redirectDelay);
       }
+    },
+    toPastNext(n){
+      let  newID = parseInt(this.tool.id) + n
+      this.$router.push('/page?id=' + newID)
+      this.tool.id = newID
+      this.getTool()
     },
     toPush(url){
       this.$router.push(url)
