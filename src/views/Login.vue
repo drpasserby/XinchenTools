@@ -8,7 +8,7 @@
     </div>
     <div class="header_card my_card header_card_remove_flex">
             <div class="header_card_logo">
-                <img src="https://my.wulvxinchen.cn/pictures/logo/logo.webp" alt="xinchen" class="header_card_img">
+                <img src="https://my.wulvxinchen.cn/pictures/logo/logo.webp" alt="xinchen" class="header_card_img" @click="clickLogo()">
                 <strong>心尘控制面板</strong>
             </div>
             <div class="header_card_info">
@@ -57,6 +57,7 @@ export default {
   data(){
     return{
       isRemeber:false,
+      clickTimes:0,
       loginForm:{
         username:'',
         password:''
@@ -108,6 +109,34 @@ export default {
         message: '清除成功',
         type: 'success'
       });
+    },
+    clickLogo(){
+      this.clickTimes += 1;
+      if(this.clickTimes == 5){
+        ElMessage({
+          message: '坏蛋，你点我干嘛？',
+          type: 'success',
+        });
+      }else if(this.clickTimes == 10){
+        ElMessage({
+          message: '再点我就告诉你一个秘密！',
+          type: 'info'
+        });
+      }else if(this.clickTimes == 15){
+        ElMessage({
+          message: '你怎么还真继续点啊？',
+          type: 'warning'
+        });
+      }else if(this.clickTimes == 20){
+        ElMessage({
+          message: '不许点了，哼！',
+          type: 'error'
+        });
+        this.clickTimes = 0;
+        setTimeout(()=>{
+          this.openURL('https://wulvxinchen.cn/')
+        }, 3000);
+      }
     },
     fetchCookies(){
       const cookieValue = Cookies.get('xinchentools');
