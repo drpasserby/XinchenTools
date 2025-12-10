@@ -51,7 +51,14 @@ export default {
   data(){
     return{
         loading: false,
-        tool: {},
+        tool: {
+          id: 'LOADING',
+          type: 'LOADING',
+          name: 'LOADING',
+          url: 'LOADING',
+          til: 'LOADING',
+          isvis: 1
+          },
         errorts:'',
         settings:{
             autoRedirect: true,
