@@ -37,7 +37,11 @@
         <el-table-column prop="id" label="ID" sortable/>
         <el-table-column prop="type" label="类型" />
         <el-table-column prop="name" label="名称" />
-        <el-table-column prop="url" label="网址" />
+        <el-table-column prop="url" label="网址">
+          <template #default="{row}">
+            <a :href="row.url" target="_blank">{{ row.url }}</a>
+          </template>
+        </el-table-column>
         <el-table-column prop="isvis" label="可见" />
         <el-table-column fixed="right" label="操作">
             <template #default="{row}">
