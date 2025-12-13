@@ -67,8 +67,10 @@
         <el-form-item label="简介">
           <el-input v-model="newToolForm.til" :autosize="{ minRows: 2, maxRows: 6 }" type="textarea"/>
         </el-form-item>
-        <el-form-item label="是否可见">
-            <el-switch v-model="newToolForm.isvis" :active-value=1 :inactive-value=0 />
+        <el-form-item label="状态">
+          <el-select v-model="newToolForm.isvis" placeholder="选择" allow-create filterable>
+            <el-option v-for="i in isvisOptions" :key="i.value" :label="i.lb" :value="i.value" />
+          </el-select>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -97,8 +99,10 @@
         <el-form-item label="简介">
           <el-input v-model="editToolForm.til" :autosize="{ minRows: 2, maxRows: 6 }" type="textarea"/>
         </el-form-item>
-        <el-form-item label="是否可见">
-            <el-switch v-model="editToolForm.isvis" :active-value=1 :inactive-value=0 />
+        <el-form-item label="状态">
+            <el-select v-model="editToolForm.isvis" placeholder="选择" allow-create filterable>
+              <el-option v-for="i in isvisOptions" :key="i.value" :label="i.lb" :value="i.value" />
+            </el-select>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -142,6 +146,11 @@ export default {
       searchVisible: false,
       searchInput: '',
       toolTypes: ['工具', '实用', '趣味', '游戏', '资源', '其他'],
+      isvisOptions: [
+        { value: 1, lb: '可见' },
+        { value: 0, lb: '隐藏' },
+        { value: -1, lb: '删除' }
+      ],
       newToolForm: {
         type: '',
         name: '',
