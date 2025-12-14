@@ -119,7 +119,7 @@ export default {
       axios.get('https://my.wulvxinchen.cn/tools2/api/searchID.php?id='+this.tool.id).then(res=>{
           this.tool = res.data.data[0]
           this.loading = false
-          if(res.data.resultCode == 404){
+          if(res.data.resultCode == 404 || res.data.data[0].isvis == -1){
             this.tool = {
               id: 'ERROR',
               type: 'ERROR',
@@ -129,10 +129,15 @@ export default {
               isvis: -1
             }
             this.errorImg()
-            ElMessage({
-              message: '获取工具失败：' + res.data.msg,
-              type: 'error'
-            });
+            ElMessageBox.alert(
+              '未找到该工具。',
+              '错误',
+              {
+                confirmButtonText: '返回',
+                type: 'error',
+              }
+            ).then(() => {this.toPush('/')});
+          
           }
           this.autoJump()
           // 最后删掉输出
