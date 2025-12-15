@@ -46,7 +46,6 @@
         <el-table-column fixed="right" label="操作">
             <template #default="{row}">
                 <el-button link type="primary" @click="editTool(row.id)">编辑</el-button>
-                <el-button link type="danger" @click="delTool(row.id)">隐藏</el-button>
             </template>
         </el-table-column>
       </el-table>
@@ -121,7 +120,6 @@
           <el-table-column fixed="right" label="操作">
               <template #default="{row}">
                   <el-button link type="primary" @click="editTool(row.id)">编辑</el-button>
-                  <el-button link type="danger" @click="delTool(row.id)">隐藏</el-button>
               </template>
           </el-table-column>
       </el-table>
