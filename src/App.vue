@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <router-view />
+    <div class="cr_text">Copyright © 2026 心尘的工具集</div>
   </div>
 </template>
 
@@ -21,3 +22,11 @@ export default {
   },
 }
 </script>
+<style>
+.cr_text {
+  text-align: center;
+  color: #888;
+  margin: 20px 0;
+  font-size: 14px;
+}
+</style>
