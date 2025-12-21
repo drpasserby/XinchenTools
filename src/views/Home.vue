@@ -41,6 +41,11 @@
                                 <el-button @click="searchToolsBtn">搜索</el-button>
                             </template>
                         </el-input>
+                        <el-tag type="primary" @click="searchInputQuick('工具')">工具</el-tag>&nbsp;
+                        <el-tag type="success" @click="searchInputQuick('实用')">实用</el-tag>&nbsp;
+                        <el-tag type="info" @click="searchInputQuick('趣味')">趣味</el-tag>&nbsp;
+                        <el-tag type="warning" @click="searchInputQuick('游戏')">游戏</el-tag>&nbsp;
+                        <el-tag type="danger" @click="searchInputQuick('资源')">资源</el-tag>
                     </div>
                 </el-col>
                 <el-col :xs="24" :lg="8" :xl="8">
@@ -49,7 +54,7 @@
                         <el-button type="primary" @click="randomToolShow">抽卡</el-button>
                     </div>
                 </el-col>
-        </el-row>
+            </el-row>
         </div>
         <div class="body_card">
             <el-row :gutter="10">
@@ -96,6 +101,7 @@
 
 <script>
 import axios from 'axios';
+import { el } from 'element-plus/es/locales.mjs';
 export default {
   name: 'Home',
   components: {},
@@ -163,6 +169,10 @@ export default {
                     message: '已复制网址到剪贴板,快去分享吧!',
                     type: 'success'
                 });
+        },
+        searchInputQuick(keyword){
+            this.searchInput = keyword;
+            this.searchToolsBtn()
         },
         searchToolsBtn(){
             if (this.searchInput.trim() == ''){
