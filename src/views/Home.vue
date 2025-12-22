@@ -41,11 +41,13 @@
                                 <el-button @click="searchToolsBtn">搜索</el-button>
                             </template>
                         </el-input>
-                        <el-tag type="primary" @click="searchInputQuick('工具')">工具</el-tag>&nbsp;
-                        <el-tag type="success" @click="searchInputQuick('实用')">实用</el-tag>&nbsp;
-                        <el-tag type="info" @click="searchInputQuick('趣味')">趣味</el-tag>&nbsp;
-                        <el-tag type="warning" @click="searchInputQuick('游戏')">游戏</el-tag>&nbsp;
-                        <el-tag type="danger" @click="searchInputQuick('资源')">资源</el-tag>
+                        <div style="margin-top:.6em">
+                            <el-tag type="primary" @click="searchInputQuick('工具')">工具</el-tag>&nbsp;
+                            <el-tag type="success" @click="searchInputQuick('实用')">实用</el-tag>&nbsp;
+                            <el-tag type="info" @click="searchInputQuick('趣味')">趣味</el-tag>&nbsp;
+                            <el-tag type="warning" @click="searchInputQuick('游戏')">游戏</el-tag>&nbsp;
+                            <el-tag type="danger" @click="searchInputQuick('资源')">资源</el-tag>
+                        </div>
                     </div>
                 </el-col>
                 <el-col :xs="24" :lg="8" :xl="8">
