@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view />
-    <div class="cr_text">Copyright © 2026 心尘的工具集</div>
+    <div class="cr_text">Copyright © {{thisYear}} 心尘的工具集</div>
   </div>
 </template>
 
@@ -10,6 +10,10 @@ export default {
   name: 'App',
   components: {
   },
+  data(){
+    return {
+      thisYear: new Date().getFullYear()
+    }},
   mounted() {
     console.log("欢迎使用心尘工具集！")
     console.log("==============================")
