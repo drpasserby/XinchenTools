@@ -28,7 +28,7 @@
             <a href="https://github.com/drpasserby/XinchenTools" class="issues_link">GitHub</a>
             给个☆Star！<br><br>
             如果有添加/下架/举报/反馈/支持等需求的请在
-            <a href="https://github.com/drpasserby/XinchenWebTools/issues" class="issues_link">反馈</a>
+            <a href="https://github.com/drpasserby/XinchenTools/issues" class="issues_link">反馈</a>
             这里发布一个Issue，系统会自动通过邮件快速告知我。
         </span>
     </div>
