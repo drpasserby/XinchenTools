@@ -21,7 +21,7 @@
                 <el-col :xs="24" :lg="8" :xl="8">
                     <div class="my_card body_card_item menu_item" v-loading="loading">
                         <h3>状态</h3>
-                        <p>共有{{tools.length}}个网站<br>本次加载时间：{{loadingTime}}ms</p>
+                        <p>共有{{tools.length}}个网站<br>本次加载时间：<span class="status_circle green_status" v-if="loadingStatus"></span>{{loadingTime}}ms</p>
                     </div>
                 </el-col>
                 <el-col :xs="24" :lg="8" :xl="8">
@@ -120,6 +120,7 @@ export default {
         showTool:{},
         randomTool: {},
         loadingTime: 0,
+        loadingStatus: true,
         tools: [],
         searchTools: []
     };},
@@ -211,6 +212,18 @@ export default {
 </script>
 
 <style>
+.status_circle {
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    display: inline-block;
+}
+.green_status{
+    background-color: #4CAF50;
+}
+.red_status{
+    background-color: #f44336;
+}
 .my_card{
     background-color: #fff;
     border-radius: .5em;
