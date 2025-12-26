@@ -21,7 +21,7 @@
                 <el-col :xs="24" :lg="8" :xl="8">
                     <div class="my_card body_card_item menu_item" v-loading="loading">
                         <h3>状态</h3>
-                        <p>共有{{tools.length}}个网站</p>
+                        <p>共有{{tools.length}}个网站<br>本次加载时间：{{loadingTime}}ms</p>
                     </div>
                 </el-col>
                 <el-col :xs="24" :lg="8" :xl="8">
@@ -103,10 +103,8 @@
 
 <script>
 import axios from 'axios';
-import { el } from 'element-plus/es/locales.mjs';
 export default {
   name: 'Home',
-  components: {},
     data() {
     return {
         toolWinVisible: false,
@@ -121,6 +119,7 @@ export default {
         },
         showTool:{},
         randomTool: {},
+        loadingTime: 0,
         tools: [],
         searchTools: []
     };},
@@ -135,10 +134,13 @@ export default {
             }
         },
         getTools(){
+            const startTime = new Date().getTime();
             this.loading = true
             axios.get('https://my.wulvxinchen.cn/tools2/api/searchAll.php').then(res=>{
                 this.tools = res.data.data.slice().reverse()
                 this.loading = false
+                const endTime = new Date().getTime();
+                this.loadingTime = endTime - startTime;
             })
         },
         randomToolShow(){
