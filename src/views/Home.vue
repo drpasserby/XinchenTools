@@ -21,7 +21,11 @@
                 <el-col :xs="24" :lg="8" :xl="8">
                     <div class="my_card body_card_item menu_item" v-loading="loading">
                         <h3>状态</h3>
-                        <p>共有{{tools.length}}个网站<br>本次加载时间：<span class="status_circle green_status" v-if="loadingStatus"></span>{{loadingTime}}ms</p>
+                        <p>共有{{tools.length}}个网站<br>本次加载时间：
+                            <span class="status_circle green_status" v-if="loadingStatus"/>
+                            <span class="status_circle red_status" v-else/>
+                            {{loadingTime}}ms
+                        </p>
                     </div>
                 </el-col>
                 <el-col :xs="24" :lg="8" :xl="8">
