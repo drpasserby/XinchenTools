@@ -142,10 +142,22 @@ export default {
             const startTime = new Date().getTime();
             this.loading = true
             axios.get('https://my.wulvxinchen.cn/tools2/api/searchAll.php').then(res=>{
-                this.tools = res.data.data.slice().reverse()
+                if(res.data.resultCode == 200){
+                    this.tools = res.data.data.slice().reverse()
+                    this.loading = false
+                    this.loadingStatus = true
+                    const endTime = new Date().getTime();
+                    this.loadingTime = endTime - startTime;
+                }
+            }).catch(error=>{
                 this.loading = false
+                this.loadingStatus = false
                 const endTime = new Date().getTime();
                 this.loadingTime = endTime - startTime;
+                this.$message({
+                    message: '工具列表加载失败，请稍后重试('+error+')',
+                    type: 'error'
+                });
             })
         },
         randomToolShow(){
