@@ -237,6 +237,9 @@ export default {
 .green_status{
     background-color: #4CAF50;
 }
+.yellow_status{
+    background-color: #FFC107;
+}
 .red_status{
     background-color: #f44336;
 }
