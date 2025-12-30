@@ -34,7 +34,14 @@
       </el-button-group>
       <p>共有<el-text type="success">{{tools.length}}</el-text>个网站</p>
       <el-table :data="tools" stripe border v-loading="loading" style="width: 100%" height="600">
-        <el-table-column prop="id" label="ID" sortable/>
+        <el-table-column prop="id" label="ID" sortable>
+          <template #default="{row}">
+            <span class="status_circle green_status" v-if="row.isvis == 1"/>
+            <span class="status_circle yellow_status" v-else-if="row.isvis == 0"/>
+            <span class="status_circle red_status" v-else/>
+            {{ row.id }}
+          </template>
+        </el-table-column>
         <el-table-column prop="type" label="类型" />
         <el-table-column prop="name" label="名称" />
         <el-table-column prop="url" label="网址">
@@ -42,11 +49,10 @@
             <a :href="row.url" target="_blank">{{ row.url }}</a>
           </template>
         </el-table-column>
-        <el-table-column prop="isvis" label="可见" />
         <el-table-column fixed="right" label="操作">
-            <template #default="{row}">
-                <el-button link type="primary" @click="editTool(row.id)">编辑</el-button>
-            </template>
+          <template #default="{row}">
+            <el-button link type="primary" @click="editTool(row.id)">编辑</el-button>
+          </template>
         </el-table-column>
       </el-table>
     </div>
