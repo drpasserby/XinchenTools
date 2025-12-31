@@ -33,6 +33,11 @@
         <el-button type="warning" @click="getTools('searchNull.php')">获取空</el-button>
       </el-button-group>
       <p>共有<el-text type="success">{{tools.length}}</el-text>个网站</p>
+      <p>状态说明：
+        <span class="status_circle green_status"/> 可见
+        <span class="status_circle yellow_status"/> 隐藏
+        <span class="status_circle red_status"/> 删除
+      </p>
       <el-table :data="tools" stripe border v-loading="loading" style="width: 100%" height="600">
         <el-table-column prop="id" label="ID" sortable>
           <template #default="{row}">
