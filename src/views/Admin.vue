@@ -4,6 +4,17 @@
       <el-button type="primary" @click="backTools()">返回工具集</el-button>
       <el-button type="danger" @click="logout()">退出</el-button>
     </div>
+    <div class="header_card my_card remove_flex">
+      <el-menu mode="horizontal">
+        <el-menu-item index="1" @click="addTool()">快速新增</el-menu-item>
+        <el-sub-menu index="2">
+          <template #title>测试</template>
+          <el-menu-item index="2-1"  @click="testCookie()">测试Cookie</el-menu-item>
+          <el-menu-item index="2-2" @click="testIP()">测试IP/UA</el-menu-item>
+        </el-sub-menu>
+      </el-menu>
+
+    </div>
     <div class="header_card my_card">
       <el-button-group>
         <el-button type="primary" @click="addTool()">快速新增</el-button>
