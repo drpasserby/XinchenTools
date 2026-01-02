@@ -16,13 +16,6 @@
 
     </div>
     <div class="header_card my_card">
-      <el-button-group>
-        <el-button type="primary" @click="addTool()">快速新增</el-button>
-        <el-button type="primary" @click="testCookie()">测试Cookie</el-button>
-        <el-button type="primary" @click="testIP()">测试IP/UA</el-button>
-      </el-button-group>
-    </div>
-    <div class="header_card my_card">
         <el-input
             v-model="searchInput"
             placeholder="输入关键词"
