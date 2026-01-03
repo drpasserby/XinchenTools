@@ -70,7 +70,8 @@
                         <p class="tool_type">{{ i.type }}</p>
                         <div>
                             <el-button type="primary" @click="toolOpenInfo(i.id)">详情</el-button>
-                            <el-button type="success" @click="openURL(i.url)">访问</el-button>
+                            <el-button type="success" @click="openURL(i.url)" v-if="i.isvis == 1">访问</el-button>
+                            <el-button type="success" disabled v-else>访问</el-button>
                         </div>
                     </div>
                 </el-col>
@@ -80,7 +81,8 @@
             <p class="tool_name"><strong>{{ showTool.name }}</strong></p>
             <p class="tool_type"><strong>类型：{{ showTool.type }}</strong></p>
             <p class="tool_til">简介：{{ showTool.til }}</p>
-            <p class="tool_url">网址：<a :href="showTool.url" target="_blank">{{ showTool.url }}</a></p>
+            <p class="tool_url" v-if="showTool.isvis == 1">网址：<a :href="showTool.url" target="_blank">{{ showTool.url }}</a></p>
+            <p class="tool_url" v-else>网址：<el-text type="danger">该网站暂不可访问</el-text></p>
             <template #footer>
                 <el-button-group>
                     <el-button type="warning" @click="randomToolShow()" v-if="randomBtnVisible">再换一个</el-button>
