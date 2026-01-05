@@ -45,7 +45,7 @@
                                 <el-button @click="searchToolsBtn">搜索</el-button>
                             </template>
                         </el-input>
-                        <div style="margin-top:.6em">
+                        <div class="tag_box">
                             <el-tag type="primary" @click="searchInputQuick('工具')">工具</el-tag>&nbsp;
                             <el-tag type="success" @click="searchInputQuick('实用')">实用</el-tag>&nbsp;
                             <el-tag type="info" @click="searchInputQuick('趣味')">趣味</el-tag>&nbsp;
@@ -317,6 +317,13 @@ export default {
 }
 .menu_item{
     height: 8em;
+}
+.tag_box {
+    margin-top: .6em;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 .tool_card{
     transition: all .5s;
