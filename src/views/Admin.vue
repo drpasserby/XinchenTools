@@ -140,6 +140,17 @@
           </el-table-column>
       </el-table>
     </el-dialog>
+    <el-dialog v-model="cookieMgtVisible" title="Cookie管理" width="500" align-center>
+      <el-table :data="cookieMgts" stripe border style="width: 100%" height="700">
+          <el-table-column prop="name" label="名称" />
+          <el-table-column prop="type" label="类型" />
+          <el-table-column fixed="right" label="操作">
+              <template #default="{row}">
+                  <el-button link type="primary" @click="editTool(row.id)">编辑</el-button>
+              </template>
+          </el-table-column>
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 
@@ -158,6 +169,7 @@ export default {
       addFormVisible: false,
       editFormVisible: false,
       searchVisible: false,
+      cookieMgtVisible: false,
       searchInput: '',
       toolTypes: ['工具', '实用', '趣味', '游戏', '资源', '其他'],
       isvisOptions: [
@@ -182,6 +194,7 @@ export default {
       },
       tools: [],
       searchTools: [],
+      cookieMgts: []
     }
   },
   methods:{
