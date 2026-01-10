@@ -12,6 +12,10 @@
           <el-menu-item index="2-1"  @click="testCookie()">测试Cookie</el-menu-item>
           <el-menu-item index="2-2" @click="testIP()">测试IP/UA</el-menu-item>
         </el-sub-menu>
+        <el-sub-menu index="3">
+          <template #title>管理</template>
+          <el-menu-item index="3-1"  @click="mgtCookie()">管理Cookie</el-menu-item>
+        </el-sub-menu>
       </el-menu>
 
     </div>
@@ -142,11 +146,16 @@
     </el-dialog>
     <el-dialog v-model="cookieMgtVisible" title="Cookie管理" width="500" align-center>
       <el-table :data="cookieMgts" stripe border style="width: 100%" height="700">
-          <el-table-column prop="name" label="名称" />
-          <el-table-column prop="type" label="类型" />
+          <el-table-column prop="id" label="ID" />
+          <el-table-column prop="username" label="用户名" />
+          <el-table-column prop="cookie" label="Cookie" />
+          <el-table-column prop="LoginTime" label="登录时间" />
+          <el-table-column prop="LostTime" label="失效时间" />
+          <el-table-column prop="ip" label="IP地址" />
+          <el-table-column prop="ua" label="User-Agent" />
           <el-table-column fixed="right" label="操作">
               <template #default="{row}">
-                  <el-button link type="primary" @click="editTool(row.id)">编辑</el-button>
+                  <el-button link type="primary" @click="mgtCookieLost(row.id)">失效</el-button>
               </template>
           </el-table-column>
       </el-table>
@@ -251,6 +260,12 @@ export default {
           );
         }
       });
+    },
+    mgtCookie(){
+      this.cookieMgtVisible = true
+      axios.get('https://my.wulvxinchen.cn/tools2/api/getCookieMgt.php').then(res=>{
+        this.cookieMgts = res.data.cookies
+      })
     },
     addTool(){
         this.addFormVisible = true
