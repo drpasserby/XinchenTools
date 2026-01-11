@@ -57,7 +57,7 @@
         </el-table-column>
         <el-table-column prop="type" label="类型" />
         <el-table-column prop="name" label="名称" />
-        <el-table-column prop="url" label="网址">
+        <el-table-column prop="url" label="网址" show-overflow-tooltip>
           <template #default="{row}">
             <a :href="row.url" target="_blank">{{ row.url }}</a>
           </template>
@@ -146,16 +146,15 @@
     </el-dialog>
     <el-dialog v-model="cookieMgtVisible" title="Cookie管理" width="500" align-center>
       <el-table :data="cookieMgts" stripe border style="width: 100%" height="700">
-          <el-table-column prop="id" label="ID" />
-          <el-table-column prop="username" label="用户名" />
           <el-table-column prop="cookie" label="Cookie" />
+          <el-table-column prop="username" label="用户名" />
           <el-table-column prop="LoginTime" label="登录时间" />
           <el-table-column prop="LostTime" label="失效时间" />
-          <el-table-column prop="ip" label="IP地址" />
-          <el-table-column prop="ua" label="User-Agent" />
+          <el-table-column prop="ip" label="IP地址" show-overflow-tooltip />
+          <el-table-column prop="ua" label="User-Agent" show-overflow-tooltip />
           <el-table-column fixed="right" label="操作">
               <template #default="{row}">
-                  <el-button link type="primary" @click="mgtCookieLost(row.id)">失效</el-button>
+                  <el-button link type="primary" @click="mgtCookieLost(row.id)">立即失效</el-button>
               </template>
           </el-table-column>
       </el-table>
