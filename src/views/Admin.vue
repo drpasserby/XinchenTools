@@ -14,7 +14,7 @@
         </el-sub-menu>
         <el-sub-menu index="3">
           <template #title>管理</template>
-          <el-menu-item index="3-1"  @click="mgtCookie()">管理Cookie</el-menu-item>
+          <el-menu-item index="3-1"  @click="mgtCookieGet()">管理Cookie</el-menu-item>
         </el-sub-menu>
       </el-menu>
 
@@ -68,6 +68,23 @@
             <el-button link type="success" @click="openURL('https://tool.chinaz.com/pagestatus/?url='+row.url)">检测</el-button>
           </template>
         </el-table-column>
+      </el-table>
+    </div>
+    <div class="header_card my_card remove_flex">
+      <el-button type="primary" @click="mgtCookieGet()">获取有效Cookie</el-button>
+      <p>共有<el-text type="success">{{cookieMgts.length}}</el-text>个有效Cookie</p>
+      <el-table :data="cookieMgts" stripe border style="width: 100%" height="400">
+          <el-table-column prop="cookie" label="Cookie" />
+          <el-table-column prop="username" label="用户名" />
+          <el-table-column prop="LoginTime" label="登录时间" />
+          <el-table-column prop="LostTime" label="失效时间" />
+          <el-table-column prop="ip" label="IP地址" show-overflow-tooltip />
+          <el-table-column prop="ua" label="User-Agent" show-overflow-tooltip />
+          <el-table-column fixed="right" label="操作">
+              <template #default="{row}">
+                  <el-button link type="primary" @click="mgtCookieLost(row.id)">立即失效</el-button>
+              </template>
+          </el-table-column>
       </el-table>
     </div>
     <el-dialog v-model="addFormVisible" title="添加网址" width="500" align-center>
@@ -260,7 +277,7 @@ export default {
         }
       });
     },
-    mgtCookie(){
+    mgtCookieGet(){
       this.cookieMgtVisible = true
       axios.get('https://my.wulvxinchen.cn/tools2/api/getCookieMgt.php').then(res=>{
         this.cookieMgts = res.data.cookies
