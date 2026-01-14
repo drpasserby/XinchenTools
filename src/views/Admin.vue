@@ -261,7 +261,34 @@ export default {
     mgtCookieGet(){
       this.cookieMgtVisible = true
       axios.get('https://my.wulvxinchen.cn/tools2/api/getCookieMgt.php').then(res=>{
-        this.cookieMgts = res.data.cookies
+        if(res.data.code === 200){
+          this.cookieMgts = res.data.cookies
+          ElMessage({
+            message: '获取成功',
+            type: 'success',
+          });
+        } else {
+          ElMessage({
+            message: '失败：' + res.data.msg,
+            type: 'error',
+          });
+        }
+      })
+    },
+    mgtCookieLost(id){
+      axios.get('https://my.wulvxinchen.cn/tools2/api/delCookieMgt.php?id=' + id).then(res=>{
+        if(res.data.code === 200){
+          ElMessage({
+            message: res.data.msg,
+            type: 'success',
+          });
+          this.mgtCookieGet()
+        } else {
+          ElMessage({
+            message: '删除失败：' + res.data.msg,
+            type: 'error',
+          });
+        }
       })
     },
     addTool(){
