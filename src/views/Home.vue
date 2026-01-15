@@ -71,7 +71,7 @@
                         <div>
                             <el-button type="primary" @click="toolOpenInfo(i.id)">详情</el-button>
                             <el-button type="success" @click="openURL(i.url)" v-if="i.isvis == 1">访问</el-button>
-                            <el-button type="success" disabled v-else>访问</el-button>
+                            <el-button type="danger" disabled v-else>访问</el-button>
                         </div>
                     </div>
                 </el-col>
@@ -86,7 +86,8 @@
             <template #footer>
                 <el-button-group>
                     <el-button type="warning" @click="randomToolShow()" v-if="randomBtnVisible">再换一个</el-button>
-                    <el-button type="success" @click="openURL(showTool.url)">直接访问</el-button>
+                    <el-button type="success" @click="openURL(showTool.url)" v-if="showTool.isvis == 1">直接访问</el-button>
+                    <el-button type="danger" @click="openURL(showTool.url)" v-else disabled>禁止访问</el-button>
                     <el-button type="info" @click="openURL('./page?id='+showTool.id)">独立页面</el-button>
                     <el-button type="primary" @click="shareURL(showTool.id)">分享</el-button>
                 </el-button-group>
