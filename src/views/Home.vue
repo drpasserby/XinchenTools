@@ -89,6 +89,7 @@
             <template #footer>
                 <el-button-group>
                     <el-button type="warning" @click="randomToolShow()" v-if="randomBtnVisible">再换一个</el-button>
+                    <el-button type="warning" @click="addStar(showTool.id)" v-else>收藏</el-button>
                     <el-button type="success" @click="openURL(showTool.url)" v-if="showTool.isvis == 1">直接访问</el-button>
                     <el-button type="danger" @click="openURL(showTool.url)" v-else disabled>禁止访问</el-button>
                     <el-button type="info" @click="openURL('./page?id='+showTool.id)">独立页面</el-button>
@@ -190,6 +191,29 @@ export default {
             this.showTool = this.tools.find(tool => tool.id === id);
             this.randomBtnVisible = false
             this.toolWinVisible = true
+        },
+        addStar(id){
+            const toolToAdd = this.tools.find(tool => tool.id === id);
+            if (!toolToAdd) {
+                this.$message({
+                    message: '未找到该工具，无法添加收藏',
+                    type: 'error'
+                });
+                return;
+            }
+            const existingStar = this.starTools.find(tool => tool.id === id);
+            if (existingStar) {
+                this.$message({
+                    message: '该工具已在收藏夹中',
+                    type: 'warning'
+                });
+                return;
+            }
+            this.starTools.push(toolToAdd);
+            this.$message({
+                message: '已成功添加到收藏夹',
+                type: 'success'
+            });
         },
         openURL(url){
             window.open(url, '_blank')
