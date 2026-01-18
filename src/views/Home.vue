@@ -56,8 +56,11 @@
                 </el-col>
                 <el-col :xs="24" :lg="8" :xl="8">
                     <div class="my_card body_card_item menu_item">
-                        <h3>随机一站</h3>
-                        <el-button type="primary" @click="randomToolShow">抽卡</el-button>
+                        <h3>工具栏</h3>
+                        <el-button-group>
+                            <el-button type="primary" @click="randomToolShow">随机抽卡</el-button>
+                            <el-button type="warning" @click="this.starVisible = true">收藏夹</el-button>
+                        </el-button-group>
                     </div>
                 </el-col>
             </el-row>
@@ -105,6 +108,18 @@
                 </el-table-column>
             </el-table>
         </el-dialog>
+        <el-dialog v-model="starVisible" title="收藏夹" width="500" align-center>
+            <p>共有<el-text type="success">{{starTools.length}}</el-text>个收藏网站</p>
+            <el-table :data="starTools" stripe border style="width: 100%" height="700">
+                <el-table-column prop="name" label="名称" />
+                <el-table-column prop="type" label="类型" />
+                <el-table-column fixed="right" label="操作">
+                    <template #default="{row}">
+                        <el-button link type="primary" @click="toolOpenInfo(row.id)">打开</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </el-dialog>
     </div>
 </template>
 
@@ -117,6 +132,7 @@ export default {
         toolWinVisible: false,
         randomBtnVisible: false,
         searchVisible: false,
+        starVisible: false,
         loading: false,
         searchInput: '',
         settings:{
@@ -129,7 +145,8 @@ export default {
         loadingTime: 0,
         loadingStatus: true,
         tools: [],
-        searchTools: []
+        searchTools: [],
+        starTools: []
     };},
     methods: {
         getSettings(){
