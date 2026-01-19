@@ -89,7 +89,7 @@
             <template #footer>
                 <el-button-group>
                     <el-button type="warning" @click="randomToolShow()" v-if="randomBtnVisible">再换一个</el-button>
-                    <el-button type="warning" @click="addStar(showTool.id)" v-else>收藏</el-button>
+                    <el-button type="warning" @click="toggleStar(showTool.id)" v-else>收藏</el-button>
                     <el-button type="success" @click="openURL(showTool.url)" v-if="showTool.isvis == 1">直接访问</el-button>
                     <el-button type="danger" @click="openURL(showTool.url)" v-else disabled>禁止访问</el-button>
                     <el-button type="info" @click="openURL('./page?id='+showTool.id)">独立页面</el-button>
@@ -110,13 +110,14 @@
             </el-table>
         </el-dialog>
         <el-dialog v-model="starVisible" title="收藏夹" width="500" align-center>
-            <p>共有<el-text type="success">{{starTools.length}}</el-text>个收藏网站</p>
-            <el-table :data="starTools" stripe border style="width: 100%" height="700">
+            <p>共有<el-text type="success">{{starToolsInfo.length}}</el-text>个收藏网站</p>
+            <el-table :data="starToolsInfo" stripe border style="width: 100%" height="700">
                 <el-table-column prop="name" label="名称" />
                 <el-table-column prop="type" label="类型" />
                 <el-table-column fixed="right" label="操作">
                     <template #default="{row}">
                         <el-button link type="primary" @click="toolOpenInfo(row.id)">打开</el-button>
+                        <el-button link type="danger" @click="toggleStar(row.id)">取消收藏</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -147,8 +148,9 @@ export default {
         loadingStatus: true,
         tools: [],
         searchTools: [],
-        starTools: []
+        starTools: JSON.parse(localStorage.getItem('starTools')) || []
     };},
+    
     methods: {
         getSettings(){
             const savedSettings = localStorage.getItem('settings');
@@ -192,28 +194,21 @@ export default {
             this.randomBtnVisible = false
             this.toolWinVisible = true
         },
-        addStar(id){
-            const toolToAdd = this.tools.find(tool => tool.id === id);
-            if (!toolToAdd) {
+        toggleStar(id) {
+            const index = this.starTools.indexOf(id)
+            if (index > -1) {
+                this.starTools.splice(index, 1)
                 this.$message({
-                    message: '未找到该工具，无法添加收藏',
-                    type: 'error'
-                });
-                return;
-            }
-            const existingStar = this.starTools.find(tool => tool.id === id);
-            if (existingStar) {
-                this.$message({
-                    message: '该工具已在收藏夹中',
+                    message: '取消收藏成功',
                     type: 'warning'
                 });
-                return;
+            } else {
+                this.starTools.push(id)
+                this.$message({
+                    message: '添加收藏成功',
+                    type: 'success'
+                });
             }
-            this.starTools.push(toolToAdd);
-            this.$message({
-                message: '已成功添加到收藏夹',
-                type: 'success'
-            });
         },
         openURL(url){
             window.open(url, '_blank')
