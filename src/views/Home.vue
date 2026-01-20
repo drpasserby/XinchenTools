@@ -150,7 +150,21 @@ export default {
         searchTools: [],
         starTools: JSON.parse(localStorage.getItem('starTools')) || []
     };},
-    
+    computed: {
+        starToolsInfo() {
+            return this.starTools
+                .map(id => this.tools.find(tool => tool.id === id))
+                .filter(tool => tool !== undefined)
+        }
+    },
+    watch: {
+        starTools: {
+            handler(newstarTool) {
+                localStorage.setItem('starTools', JSON.stringify(newstarTool))
+            },
+        deep: true
+        }
+    },
     methods: {
         getSettings(){
             const savedSettings = localStorage.getItem('settings');
