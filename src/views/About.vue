@@ -49,6 +49,9 @@
             <el-form-item label="打开主页是否立即抽卡">
                 <el-switch v-model="settings.autoRandomTool"/>
             </el-form-item>
+            <el-form-item label="清空本地收藏夹">
+                <el-button type="danger" @click="clearStar">清除</el-button>
+            </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="saveSettings">保存</el-button>
                 <el-button type="success" @click="backupSettings">恢复默认设置</el-button>
@@ -67,6 +70,7 @@
 </template>
 
 <script>
+import { ElMessage, ElMessageBox } from 'element-plus';
 export default {
   name: 'About',
   data(){
@@ -94,6 +98,28 @@ export default {
     },
     openURL(url){
         window.open(url, '_blank')
+    },
+    clearStar(){
+        ElMessageBox.confirm(
+            '你确定要清空本地收藏夹吗？此操作不可逆！',
+            '警告',
+            {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+            }
+        ).then(() => {
+            localStorage.removeItem('starTools');
+            this.$message({
+                type: 'success',
+                message: '已清除本地收藏夹'
+            });
+        }).catch(() => {
+            this.$message({
+                type: 'info',
+                message: '已取消清除'
+            });
+        });
     },
     saveSettings(){
         localStorage.setItem('settings', JSON.stringify(this.settings));
