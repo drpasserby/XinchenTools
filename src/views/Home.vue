@@ -110,7 +110,7 @@
                 </el-table-column>
             </el-table>
         </el-dialog>
-        <el-dialog v-model="starVisible" title="收藏夹" width="500" align-center>
+        <el-dialog v-model="starVisible" title="收藏夹(本地)" width="500" align-center>
             <p>共有<el-text type="success">{{starToolsInfo.length}}</el-text>个收藏网站</p>
             <el-table :data="starToolsInfo" stripe border style="width: 100%" height="700">
                 <el-table-column prop="name" label="名称" />
