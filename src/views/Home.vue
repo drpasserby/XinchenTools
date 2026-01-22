@@ -89,7 +89,8 @@
             <template #footer>
                 <el-button-group>
                     <el-button type="warning" @click="randomToolShow()" v-if="randomBtnVisible">再换一个</el-button>
-                    <el-button type="warning" @click="toggleStar(showTool.id)" v-else>收藏</el-button>
+                    <el-button type="primary" @click="toggleStar(showTool.id)" v-if="!isStarred(showTool.id)">收藏</el-button>
+                    <el-button type="primary" @click="toggleStar(showTool.id)" v-else>取消收藏</el-button>
                     <el-button type="success" @click="openURL(showTool.url)" v-if="showTool.isvis == 1">直接访问</el-button>
                     <el-button type="danger" @click="openURL(showTool.url)" v-else disabled>禁止访问</el-button>
                     <el-button type="info" @click="openURL('./page?id='+showTool.id)">独立页面</el-button>
@@ -223,6 +224,10 @@ export default {
                     type: 'success'
                 });
             }
+        },
+        isStarred(id) {
+            if (id === undefined || id === null) return false
+            return Array.isArray(this.starTools) && this.starTools.includes(id)
         },
         openURL(url){
             window.open(url, '_blank')
