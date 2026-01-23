@@ -30,6 +30,8 @@
           <span v-else>该网址已不可访问</span>
         </p>
         <div>
+            <el-button type="primary" @click="toggleStar(tool.id)" v-if="!isStarred(tool.id)">收藏</el-button>
+            <el-button type="primary" @click="toggleStar(tool.id)" v-else>取消收藏</el-button>
             <el-button type="primary" @click="shareURL(tool.id)">分享</el-button>
             <el-button type="danger" @click="openURL(tool.url)" :disabled="tool.isvis == 0">访问</el-button>
         </div>
@@ -72,6 +74,15 @@ export default {
             redirectDelay: 3000,
             autoRandomTool:false
         },
+        starTools: JSON.parse(localStorage.getItem('starTools')) || []
+    }
+  },
+  watch: {
+    starTools: {
+        handler(newstarTool) {
+            localStorage.setItem('starTools', JSON.stringify(newstarTool))
+        },
+    deep: true
     }
   },
   methods:{
@@ -113,6 +124,10 @@ export default {
     },
     openURL(url){
       window.open(url, '_blank')
+    },
+    isStarred(id) {
+      if (id === undefined || id === null) return false
+        return Array.isArray(this.starTools) && this.starTools.includes(id)
     },
     getTool(){
       this.loading = true
