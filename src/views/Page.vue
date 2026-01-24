@@ -125,6 +125,22 @@ export default {
     openURL(url){
       window.open(url, '_blank')
     },
+    toggleStar(id) {
+      const index = this.starTools.indexOf(id)
+      if (index > -1) {
+        this.starTools.splice(index, 1)
+        this.$message({
+            message: '取消收藏成功',
+            type: 'warning'
+        });
+      } else {
+        this.starTools.push(id)
+        this.$message({
+            message: '添加收藏成功',
+            type: 'success'
+        });
+      }
+    },
     isStarred(id) {
       if (id === undefined || id === null) return false
         return Array.isArray(this.starTools) && this.starTools.includes(id)
