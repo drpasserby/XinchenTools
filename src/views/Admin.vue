@@ -61,7 +61,6 @@
         <el-table-column fixed="right" label="操作">
           <template #default="{row}">
             <el-button link type="primary" @click="editTool(row.id)">编辑</el-button>
-            <el-button link type="success" @click="openURL('https://tool.chinaz.com/pagestatus/?url='+row.url)">检测</el-button>
           </template>
         </el-table-column>
       </el-table>
