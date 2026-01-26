@@ -112,6 +112,7 @@
         </el-dialog>
         <el-dialog v-model="starVisible" title="收藏夹(本地)" width="500" align-center>
             <p>共有<el-text type="success">{{starToolsInfo.length}}</el-text>个收藏网站</p>
+            <el-button type="primary" @click="loadLocalStars" style="margin-bottom:8px">刷新</el-button>
             <el-table :data="starToolsInfo" stripe border style="width: 100%" height="700">
                 <el-table-column prop="name" label="名称" />
                 <el-table-column prop="type" label="类型" />
@@ -271,6 +272,22 @@ export default {
                 )
             })
             this.searchVisible = true
+        },
+        loadLocalStars(){
+            try{
+                const raw = localStorage.getItem('starTools')
+                this.starTools = raw ? JSON.parse(raw) : []
+                this.$message({
+                    message: '已刷新本地收藏夹',
+                    type: 'success'
+                })
+            }
+            catch(e){
+                this.$message({
+                    message: '读取本地收藏夹失败: ' + e,
+                    type: 'error'
+                })
+            }
         },
     },
     mounted(){
