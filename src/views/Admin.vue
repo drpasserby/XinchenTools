@@ -409,8 +409,6 @@ export default {
       axios.get('https://my.wulvxinchen.cn/tools2/api/' + url).then(res=>{
         this.tools = res.data.data
         this.loading = false
-        // 最后删掉输出
-        console.log(this.tools)
       })
     },
   }
