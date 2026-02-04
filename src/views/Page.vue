@@ -171,8 +171,6 @@ export default {
           
           }
           this.autoJump()
-          // 最后删掉输出
-          console.log(this.tool)
       })
       
     },
