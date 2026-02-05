@@ -122,6 +122,14 @@
         </el-col>
       </el-row>
     </div>
+    <div class="body_card" @click="backToTop">
+      <hr>
+      <div class="cr_text">已到达世界的尽头.....
+        <br>
+        <span>点击返回顶部</span>
+      </div>
+      <hr>
+    </div>
     <el-dialog
       v-model="toolWinVisible"
       :title="'工具ID:' + showTool.id"
@@ -395,6 +403,9 @@ export default {
         );
       });
       this.searchVisible = true;
+    },
+    backToTop() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     },
     loadLocalStars() {
       try {
