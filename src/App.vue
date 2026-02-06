@@ -2,6 +2,7 @@
   <div id="app">
     <router-view />
     <div class="cr_text">Copyright © {{thisYear}} 心尘的工具集</div>
+    <div class="cr_text">Powered by <a href="https://wulvxinchen.cn/">吾律心尘</a></div>
   </div>
 </template>
 
