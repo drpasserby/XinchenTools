@@ -64,6 +64,16 @@
         <a href="https://afdian.com/a/wulvxinchen" ><img src="https://my.wulvxinchen.cn/pictures/things/爱发电.png" alt="xinchen" class="header_card_img" style="width:10em"></a>
     </div>
     <div class="header_card my_card remove_flex">
+        <h3>鸣谢 | 技术使用</h3>
+        <svg viewBox="0 0 128 128" width="24" height="24" data-v-71e07b25=""><path fill="#42b883" d="M78.8,10L64,35.4L49.2,10H0l64,110l64-110C128,10,78.8,10,78.8,10z" data-v-71e07b25=""></path><path fill="#35495e" d="M78.8,10L64,35.4L49.2,10H25.6L64,76l38.4-66H78.8z" data-v-71e07b25=""></path></svg>
+        &nbsp;
+        <img src="https://cn.vitejs.dev/assets/vite-dark.D2ACe7TL.svg" alt="Vite Logo" wuidth="24" height="24"/>
+        &nbsp;
+        <img src="https://element-plus.org/images/element-plus-logo.svg" alt="Element Plus Logo" wuidth="24" height="24">
+        &nbsp;
+        <img src="https://www.subscriptioninsider.com/wp-content/uploads/2021/10/Axios-logo.png" alt="Axios Logo" wuidth="24" height="24"/>
+    </div>
+    <div class="header_card my_card remove_flex">
         <strong>{{ timeText }}</strong>
     </div>
   </div>
@@ -71,6 +81,7 @@
 
 <script>
 import { ElMessage, ElMessageBox } from 'element-plus';
+import { ta } from 'element-plus/es/locales.mjs';
 export default {
   name: 'About',
   data(){
