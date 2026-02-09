@@ -34,6 +34,12 @@
                     >
                 </el-input>
             </el-form-item>
+            <el-form-item label="验证码">
+              <div class="captcha_container">
+                <el-input v-model="loginForm.captchaInput" placeholder="不区分大小写"></el-input>
+                <div @click="generateCaptcha" class="captcha_box"><strong>{{ captchaCode }}</strong></div>
+              </div>
+            </el-form-item>
             <el-form-item label="记住密码">
                 <el-switch v-model="isRemeber"/>
             </el-form-item>
@@ -60,8 +66,10 @@ export default {
       clickTimes:0,
       loginForm:{
         username:'',
-        password:''
+        password:'',
+        captchaInput:''
       },
+      captchaCode: '',
     }
   },
   methods:{
@@ -72,6 +80,14 @@ export default {
         window.open(url, '_blank')
     },
     login(){
+      if(!this.loginForm.captchaInput || this.loginForm.captchaInput.toLowerCase() !== this.captchaCode.toLowerCase()){
+        this.$message({
+          message: '验证码错误，请重新输入',
+          type: 'error'
+        });
+        this.generateCaptcha();
+        return;
+      }
       axios.post('https://my.wulvxinchen.cn/tools2/api/login.php',{
         username: this.loginForm.username,
         password: this.loginForm.password
@@ -99,6 +115,13 @@ export default {
           type: 'error'
         });
       })
+    },
+    generateCaptcha(){
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+      let code = '';
+      for(let i=0;i<4;i++) code += chars.charAt(Math.floor(Math.random()*chars.length));
+      this.captchaCode = code;
+      this.loginForm.captchaInput = '';
     },
     clearAll(){
       localStorage.removeItem('userinfo');
@@ -178,6 +201,7 @@ export default {
       this.loginForm.password = userinfo.password;
       this.isRemeber = true;
     };
+    this.generateCaptcha();
     this.fetchCookies();
   }
 }
