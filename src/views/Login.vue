@@ -206,3 +206,29 @@ export default {
   }
 }
 </script>
+<style scoped>
+.captcha_container{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.captcha_box{
+  display:flex;
+  align-items:center;
+
+  padding:.2em .5em;
+  border-radius:4px;
+  background:#eee;
+  border:1px solid #dcdfe6;
+  font-size:1.3em;
+  color:#000;
+
+  user-select:none;
+  cursor:pointer;
+  
+  transition: all 0.5s;
+}
+.captcha_box:hover{
+  background:#ffdbb9;
+}
+</style>
