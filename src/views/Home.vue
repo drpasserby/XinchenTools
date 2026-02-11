@@ -135,6 +135,7 @@
       </div>
       <hr>
     </div>
+    <el-backtop :right="100" :bottom="100" />
     <el-dialog
       v-model="toolWinVisible"
       :title="'工具ID:' + showTool.id"
