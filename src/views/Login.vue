@@ -161,6 +161,11 @@ export default {
         }, 3000);
       }
     },
+    handleKeydown(event){
+      if(event && (event.key === 'Enter' || event.keyCode === 13)){
+        this.login();
+      }
+    },
     fetchCookies(){
       const cookieValue = Cookies.get('xinchentools');
       if (cookieValue != undefined) {
@@ -203,6 +208,11 @@ export default {
     };
     this.generateCaptcha();
     this.fetchCookies();
+    window.addEventListener('keydown', this.handleKeydown);
+  }
+  ,
+  beforeUnmount(){
+    window.removeEventListener('keydown', this.handleKeydown);
   }
 }
 </script>
