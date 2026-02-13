@@ -387,7 +387,7 @@ export default {
     },
     searchToolsBtn(){
       if (this.searchInput.trim() == ''){
-        this.$message({
+        ElMessage({
             message: '请输入搜索关键词',
             type: 'warning'
         });
