@@ -129,13 +129,13 @@ export default {
       const index = this.starTools.indexOf(id)
       if (index > -1) {
         this.starTools.splice(index, 1)
-        this.$message({
+        ElMessage({
             message: '取消收藏成功',
             type: 'warning'
         });
       } else {
         this.starTools.push(id)
-        this.$message({
+        ElMessage({
             message: '添加收藏成功',
             type: 'success'
         });
@@ -186,7 +186,7 @@ export default {
       input.select()
       document.execCommand('Copy')
       document.body.removeChild(input)
-      this.$message({
+      ElMessage({
               message: '已复制网址到剪贴板,快去分享吧!',
               type: 'success'
           });
