@@ -81,7 +81,7 @@ export default {
     },
     login(){
       if(!this.loginForm.captchaInput || this.loginForm.captchaInput.toLowerCase() !== this.captchaCode.toLowerCase()){
-        this.$message({
+        ElMessage({
           message: '验证码错误，请重新输入',
           type: 'error'
         });
@@ -99,18 +99,18 @@ export default {
             localStorage.removeItem('userinfo');
           }
           this.$router.push('/admin')
-          this.$message({
+          ElMessage({
             message: '登录成功',
             type: 'success'
           });
         }else{
-          this.$message({
+          ElMessage({
             message: res.data.msg,
             type: 'error'
           });
         }
       }).catch(err=>{
-        this.$message({
+        ElMessage({
           message: '网络异常，请稍后再试',
           type: 'error'
         });
@@ -128,7 +128,7 @@ export default {
       this.loginForm.username = '';
       this.loginForm.password = '';
       this.isRemeber = false;
-      this.$message({
+      ElMessage({
         message: '清除成功',
         type: 'success'
       });
