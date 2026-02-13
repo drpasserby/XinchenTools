@@ -264,6 +264,7 @@
 
 <script>
 import axios from "axios";
+import { ElMessage, ElMessageBox } from 'element-plus';
 export default {
   name: "Home",
   data() {
@@ -331,7 +332,7 @@ export default {
           this.loadingStatus = false;
           const endTime = new Date().getTime();
           this.loadingTime = endTime - startTime;
-          this.$message({
+          ElMessage({
             message: "工具列表加载失败，请稍后重试(" + error + ")",
             type: "error",
           });
@@ -352,13 +353,13 @@ export default {
       const index = this.starTools.indexOf(id);
       if (index > -1) {
         this.starTools.splice(index, 1);
-        this.$message({
+        ElMessage({
           message: "取消收藏成功",
           type: "warning",
         });
       } else {
         this.starTools.push(id);
-        this.$message({
+        ElMessage({
           message: "添加收藏成功",
           type: "success",
         });
@@ -382,7 +383,7 @@ export default {
       input.select();
       document.execCommand("Copy");
       document.body.removeChild(input);
-      this.$message({
+      ElMessage({
         message: "已复制网址到剪贴板,快去分享吧!",
         type: "success",
       });
@@ -393,7 +394,7 @@ export default {
     },
     searchToolsBtn() {
       if (this.searchInput.trim() == "") {
-        this.$message({
+        ElMessage({
           message: "请输入搜索关键词",
           type: "warning",
         });
@@ -417,12 +418,12 @@ export default {
       try {
         const raw = localStorage.getItem("starTools");
         this.starTools = raw ? JSON.parse(raw) : [];
-        this.$message({
+        ElMessage({
           message: "已刷新本地收藏夹",
           type: "success",
         });
       } catch (e) {
-        this.$message({
+        ElMessage({
           message: "读取本地收藏夹失败: " + e,
           type: "error",
         });
