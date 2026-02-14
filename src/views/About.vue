@@ -71,7 +71,9 @@
         &nbsp;
         <img src="https://element-plus.org/images/element-plus-logo.svg" alt="Element Plus Logo" wuidth="24" height="24">
         &nbsp;
-        <img src="https://www.subscriptioninsider.com/wp-content/uploads/2021/10/Axios-logo.png" alt="Axios Logo" wuidth="24" height="24"/>
+        <img src="https://cdn.prod.website-files.com/5e19ea5aa7d3a217492e372b/624de949df5a11680ab170b9_Axios%20logo%20-%20RGB%20-%20minimum%20space.png" alt="Axios Logo" wuidth="24" height="24"/>
+        &nbsp;
+        <img src="https://favicon.yandex.net/favicon/v2/https://www.npmjs.com?size=32" alt="Axios Logo" wuidth="24" height="24"/>
     </div>
     <div class="header_card my_card remove_flex">
         <strong>{{ timeText }}</strong>
