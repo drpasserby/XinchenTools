@@ -32,8 +32,9 @@
         <div>
             <el-button type="primary" @click="toggleStar(tool.id)" v-if="!isStarred(tool.id)">收藏</el-button>
             <el-button type="primary" @click="toggleStar(tool.id)" v-else>取消收藏</el-button>
-            <el-button type="primary" @click="shareURL(tool.id)">分享</el-button>
-            <el-button type="danger" @click="openURL(tool.url)" :disabled="tool.isvis == 0">访问</el-button>
+            <el-button type="primary" @click="shareURL(tool.id)" :disabled="tool.isvis == 0">分享</el-button>
+            <el-button type="success" @click="openURL(tool.url)" v-if="tool.isvis != 0">访问</el-button>
+            <el-button type="danger" disabled v-else>禁止访问</el-button>
         </div>
     </div>
     <div class="header_card my_card tool_card remove_flex" v-else>
