@@ -33,6 +33,7 @@
             <el-button type="primary" @click="toggleStar(tool.id)" v-if="!isStarred(tool.id)" :disabled="tool.isvis == 0">收藏</el-button>
             <el-button type="primary" @click="toggleStar(tool.id)" v-else :disabled="tool.isvis == 0">取消收藏</el-button>
             <el-button type="primary" @click="shareURL(tool.id)" :disabled="tool.isvis == 0">分享</el-button>
+            <el-button type="info" @click="reviewURL()">预览</el-button>
             <el-button type="success" @click="openURL(tool.url)" v-if="tool.isvis != 0">访问</el-button>
             <el-button type="danger" disabled v-else>禁止访问</el-button>
         </div>
@@ -47,6 +48,16 @@
       <el-button type="warning" @click="toPastNext(-1)">上一个</el-button>
       <el-button type="success" @click="toPastNext(1)">下一个</el-button>
     </div>
+    <el-dialog v-model="previewVisible" title="预览" align-center>
+      <p>本预览窗口仅供参考,请以实际情况为准</p>
+      <iframe 
+        :src="'https://cdn2.iocdn.cc/mshots/v1/' + tool.url"
+        width="100%" 
+        height="100%" 
+        frameborder="0"
+        allowfullscreen
+      ></iframe>
+    </el-dialog>
   </div>
 </template>
 
@@ -61,6 +72,7 @@ export default {
   data(){
     return{
         loading: false,
+        previewVisible: false,
         tool: {
           id: 'LOADING',
           type: 'LOADING',
@@ -125,6 +137,9 @@ export default {
     },
     openURL(url){
       window.open(url, '_blank')
+    },
+    reviewURL(){
+      this.previewVisible = true
     },
     toggleStar(id) {
       const index = this.starTools.indexOf(id)
