@@ -48,15 +48,17 @@
       <el-button type="warning" @click="toPastNext(-1)">上一个</el-button>
       <el-button type="success" @click="toPastNext(1)">下一个</el-button>
     </div>
-    <el-dialog v-model="previewVisible" title="预览" align-center>
+    <el-dialog v-model="previewVisible" title="预览" align-center width="80%">
       <p>本预览窗口仅供参考,请以实际情况为准</p>
-      <iframe 
-        :src="'https://cdn2.iocdn.cc/mshots/v1/' + tool.url"
-        width="100%" 
-        height="100%" 
-        frameborder="0"
-        allowfullscreen
-      ></iframe>
+      <div class="preview_container">
+        <iframe 
+          :src="'https://cdn2.iocdn.cc/mshots/v1/' + tool.url"
+          width="100%" 
+          height="100%" 
+          frameborder="0"
+          allowfullscreen
+        ></iframe>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -221,5 +223,8 @@ export default {
 }
 </script>
 <style>
-
+.preview_container{
+  width: 100%;
+  height: 75vh;
+}
 </style>
