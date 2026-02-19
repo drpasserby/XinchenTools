@@ -49,7 +49,8 @@
       <el-button type="success" @click="toPastNext(1)">下一个</el-button>
     </div>
     <el-dialog v-model="previewVisible" title="预览" align-center width="80%">
-      <p>本预览窗口仅供参考,请以实际情况为准</p>
+      <p>本窗口仅生成图片预览，内容仅供参考,请以实际情况为准</p>
+      <el-button type="primary" @click="openURL('https://cdn2.iocdn.cc/mshots/v1/' + tool.url)" >打开新窗口预览</el-button>
       <div class="preview_container">
         <iframe 
           :src="'https://cdn2.iocdn.cc/mshots/v1/' + tool.url"
