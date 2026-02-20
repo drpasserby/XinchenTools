@@ -172,6 +172,9 @@
           <el-button type="primary" @click="toggleStar(showTool.id)" v-else
             >取消收藏</el-button
           >
+          <el-button type="info" @click="reviewURL()"
+            >预览</el-button
+          >
           <el-button
             type="success"
             @click="openURL(showTool.url)"
@@ -259,6 +262,19 @@
         </el-table-column>
       </el-table>
     </el-dialog>
+    <el-dialog v-model="previewVisible" title="预览" align-center width="80%">
+      <p>本窗口仅生成图片预览，内容仅供参考,请以实际情况为准</p>
+      <el-button type="primary" @click="openURL('https://cdn2.iocdn.cc/mshots/v1/' + showTool.url)" >打开新窗口预览</el-button><br>
+      <div class="preview_container">
+        <iframe 
+          :src="'https://cdn2.iocdn.cc/mshots/v1/' + showTool.url"
+          width="100%" 
+          height="100%" 
+          frameborder="0"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -273,6 +289,7 @@ export default {
       randomBtnVisible: false,
       searchVisible: false,
       starVisible: false,
+      previewVisible: false,
       loading: false,
       searchInput: "",
       settings: {
@@ -368,6 +385,9 @@ export default {
     isStarred(id) {
       if (id === undefined || id === null) return false;
       return Array.isArray(this.starTools) && this.starTools.includes(id);
+    },
+    reviewURL(){
+      this.previewVisible = true
     },
     openURL(url) {
       window.open(url, "_blank");
