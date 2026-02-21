@@ -264,7 +264,7 @@
     </el-dialog>
     <el-dialog v-model="previewVisible" title="预览" align-center width="80%">
       <p>本窗口仅生成图片预览，内容仅供参考,请以实际情况为准</p>
-      <el-button type="primary" @click="openURL('https://cdn2.iocdn.cc/mshots/v1/' + showTool.url)" >打开新窗口预览</el-button><br>
+      <el-button type="primary" @click="openURL('https://cdn2.iocdn.cc/mshots/v1/' + showTool.url)" >打开新窗口预览</el-button><br><br>
       <div class="preview_container">
         <iframe 
           :src="'https://cdn2.iocdn.cc/mshots/v1/' + showTool.url"
