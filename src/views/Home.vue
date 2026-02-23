@@ -92,12 +92,16 @@
           <div class="my_card body_card_item menu_item">
             <h3>工具栏</h3>
             <el-button-group>
-              <el-button type="primary" @click="randomToolShow"
-                >随机抽卡</el-button
-              >
-              <el-button type="warning" @click="this.starVisible = true"
-                >收藏夹</el-button
-              >
+              <el-tooltip
+                content="点击随机展示一个工具"
+                placement="bottom"
+              ><el-button type="primary" @click="randomToolShow">随机抽卡</el-button>
+              </el-tooltip>
+                <el-tooltip
+                content="打开本地收藏夹"
+                placement="bottom"
+              ><el-button type="warning" @click="this.starVisible = true">收藏夹</el-button>
+              </el-tooltip>
             </el-button-group>
           </div>
         </el-col>
