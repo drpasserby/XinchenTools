@@ -164,13 +164,14 @@
           <el-button type="warning" @click="randomToolShow()" v-if="randomBtnVisible">再换一个</el-button>
           <el-button type="primary" @click="toggleStar(showTool.id)" v-if="!isStarred(showTool.id)">收藏</el-button>
           <el-button type="primary" @click="toggleStar(showTool.id)" v-else>取消收藏</el-button>
-          <el-button type="info" @click="reviewURL()">预览</el-button>
+          <el-button type="info" @click="shareURL(showTool.id)">分享</el-button>
+          
         </el-button-group><br><br>
         <el-button-group class="card_btn_remove_flex">
           <el-button type="success" @click="openURL(showTool.url)" v-if="showTool.isvis == 1">直接访问</el-button>
           <el-button type="danger" @click="openURL(showTool.url)" v-else disabled>禁止访问</el-button>
-          <el-button type="info" @click="openURL('./page?id=' + showTool.id)">独立页面</el-button>
-          <el-button type="primary" @click="shareURL(showTool.id)">分享</el-button>
+          <el-button type="primary" @click="openURL('./page?id=' + showTool.id)">单页</el-button>
+          <el-button type="info" @click="reviewURL()">预览</el-button>
         </el-button-group>
       </template>
     </el-dialog>
