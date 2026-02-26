@@ -35,6 +35,7 @@
       <el-button-group>
         <el-button type="primary" @click="getTools('searchAll.php')">获取全部</el-button>
         <el-button type="warning" @click="getTools('searchNull.php')">获取空</el-button>
+        <el-button type="primary" @click="exportTools()">导出</el-button>
       </el-button-group>
       <p>共有<el-text type="success">{{tools.length}}</el-text>个网站</p>
       <p>状态说明：
@@ -403,6 +404,25 @@ export default {
           )
       })
       this.searchVisible = true
+    },
+    exportTools(){
+      try {
+        const dataStr = JSON.stringify(this.tools || [], null, 2);
+        const blob = new Blob([dataStr], { type: 'application/json;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        const now = new Date();
+        const filename = 'xinchentools_export_' + now.toISOString().slice(0,19).replace(/[:T]/g, '_') + '.json';
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        ElMessage({ message: '导出成功：' + filename, type: 'success' });
+      } catch (e) {
+        ElMessage({ message: '导出失败: ' + e.message, type: 'error' });
+      }
     },
     getTools(url){
       this.loading = true
