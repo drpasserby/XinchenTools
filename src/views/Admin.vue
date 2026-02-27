@@ -35,7 +35,7 @@
       <el-button-group>
         <el-button type="primary" @click="getTools('searchAll.php')">获取全部</el-button>
         <el-button type="warning" @click="getTools('searchNull.php')">获取空</el-button>
-        <el-button type="primary" @click="exportTools()">导出</el-button>
+        <el-button type="primary" @click="exportToolsJson()">导出Json</el-button>
       </el-button-group>
       <p>共有<el-text type="success">{{tools.length}}</el-text>个网站</p>
       <p>状态说明：
@@ -405,7 +405,7 @@ export default {
       })
       this.searchVisible = true
     },
-    exportTools(){
+    exportToolsJson(){
       try {
         const dataStr = JSON.stringify(this.tools || [], null, 2);
         const blob = new Blob([dataStr], { type: 'application/json;charset=utf-8' });
