@@ -36,6 +36,7 @@
         <el-button type="primary" @click="getTools('searchAll.php')">获取全部</el-button>
         <el-button type="warning" @click="getTools('searchNull.php')">获取空</el-button>
         <el-button type="primary" @click="exportToolsJson()">导出Json</el-button>
+        <el-button type="primary" @click="exportToolsCSV()">导出CSV</el-button>
       </el-button-group>
       <p>共有<el-text type="success">{{tools.length}}</el-text>个网站</p>
       <p>状态说明：
@@ -406,6 +407,10 @@ export default {
       this.searchVisible = true
     },
     exportToolsJson(){
+      if (!this.tools || !this.tools.length) {
+          ElMessage({ message: '没有可导出的数据', type: 'warning' });
+          return;
+        }
       try {
         const dataStr = JSON.stringify(this.tools || [], null, 2);
         const blob = new Blob([dataStr], { type: 'application/json;charset=utf-8' });
@@ -413,6 +418,53 @@ export default {
         const a = document.createElement('a');
         const now = new Date();
         const filename = 'xinchentools_export_' + now.toISOString().slice(0,19).replace(/[:T]/g, '_') + '.json';
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        ElMessage({ message: '导出成功：' + filename, type: 'success' });
+      } catch (e) {
+        ElMessage({ message: '导出失败: ' + e.message, type: 'error' });
+      }
+    },
+    exportToolsCSV(){
+      try {
+        if (!this.tools || !this.tools.length) {
+          ElMessage({ message: '没有可导出的数据', type: 'warning' });
+          return;
+        }
+        const headers = ['ID', '类型', '名称', '网址', '简介', '状态'];
+        const rows = this.tools.map(t => [
+          t.id,
+          t.type,
+          t.name,
+          t.url,
+          t.til,
+          t.isvis
+        ]);
+        const csvContent =
+          headers.join(',') +
+          '\n' +
+          rows
+            .map(r =>
+              r
+                .map(field => {
+                  const str = field == null ? '' : String(field);
+                  return '"' + str.replace(/"/g, '""') + '"';
+                })
+                .join(',')
+            )
+            .join('\n');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        const now = new Date();
+        const filename =
+          'xinchentools_export_' +
+          now.toISOString().slice(0, 19).replace(/[:T]/g, '_') +
+          '.csv';
         a.href = url;
         a.download = filename;
         document.body.appendChild(a);
