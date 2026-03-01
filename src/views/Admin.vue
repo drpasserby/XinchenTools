@@ -35,6 +35,8 @@
       <el-button-group>
         <el-button type="primary" @click="getTools('searchAll.php')">获取全部</el-button>
         <el-button type="warning" @click="getTools('searchNull.php')">获取空</el-button>
+      </el-button-group>&nbsp;
+      <el-button-group>
         <el-button type="primary" @click="exportToolsJson()">导出Json</el-button>
         <el-button type="primary" @click="exportToolsCSV()">导出CSV</el-button>
       </el-button-group>
