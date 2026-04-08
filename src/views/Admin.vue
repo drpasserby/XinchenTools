@@ -86,38 +86,8 @@
           </el-table-column>
       </el-table>
     </div>
-    <el-dialog v-model="addFormVisible" title="添加网址" width="500" align-center>
       <el-form>
-        <el-form-item label="名称">
-          <el-input v-model="newToolForm.name" />
-        </el-form-item>
-        <el-form-item label="类型">
-          <el-select v-model="newToolForm.type" placeholder="选择" allow-create filterable>
-            <el-option v-for="i in toolTypes" :key="i" :label="i" :value="i" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="网址">
-          <el-input v-model="newToolForm.url" />
-        </el-form-item>
-        <el-form-item label="简介">
-          <el-input v-model="newToolForm.til" :autosize="{ minRows: 2, maxRows: 6 }" type="textarea"/>
-        </el-form-item>
-        <el-form-item label="状态">
-          <el-select v-model="newToolForm.isvis" placeholder="选择" allow-create filterable>
-            <el-option v-for="i in isvisOptions" :key="i.value" :label="i.lb" :value="i.value" />
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <div>
-          <el-button @click="addFormVisible = false">取消</el-button>
-          <el-button type="primary" @click="addGitTool()">提交</el-button>
-        </div>
-      </template>
-    </el-dialog>
-    <el-dialog v-model="editFormVisible" title="编辑网址" width="500" align-center>
-      <el-form>
-        <el-form-item label="ID">
+        <el-form-item label="ID" v-if="dialogMode === 'edit'">
           <el-input v-model="editToolForm.id" disabled/>
         </el-form-item>
         <el-form-item label="名称">
