@@ -109,7 +109,7 @@
     </div>
     <div class="body_card">
       <el-row :gutter="10">
-        <el-col :xs="24" :md="12" :lg="8" :xl="6" v-for="i in tools" :key="i">
+        <el-col :xs="24" :md="12" :lg="8" :xl="6" v-for="i in tools" :key="i.id">
           <div class="my_card body_card_item tool_card">
             <p class="tool_name">
               <strong>{{ i.name }}</strong>
