@@ -86,35 +86,36 @@
           </el-table-column>
       </el-table>
     </div>
+    <el-dialog v-model="dialogVisible" :title="dialogMode === 'add' ? '添加网址' : '编辑网址'" width="500" align-center>
       <el-form>
         <el-form-item label="ID" v-if="dialogMode === 'edit'">
           <el-input v-model="editToolForm.id" disabled/>
         </el-form-item>
         <el-form-item label="名称">
-          <el-input v-model="editToolForm.name" />
+          <el-input :model-value="dialogMode === 'add' ? newToolForm.name : editToolForm.name" @update:model-value="dialogMode === 'add' ? newToolForm.name = $event : editToolForm.name = $event" />
         </el-form-item>
         <el-form-item label="类型">
-          <el-select v-model="editToolForm.type" placeholder="选择" allow-create filterable>
+          <el-select :model-value="dialogMode === 'add' ? newToolForm.type : editToolForm.type" @update:model-value="dialogMode === 'add' ? newToolForm.type = $event : editToolForm.type = $event" placeholder="选择" allow-create filterable>
             <el-option v-for="i in toolTypes" :key="i" :label="i" :value="i" />
           </el-select>
         </el-form-item>
         <el-form-item label="网址">
-          <el-input v-model="editToolForm.url" />
+          <el-input :model-value="dialogMode === 'add' ? newToolForm.url : editToolForm.url" @update:model-value="dialogMode === 'add' ? newToolForm.url = $event : editToolForm.url = $event" />
         </el-form-item>
         <el-form-item label="简介">
-          <el-input v-model="editToolForm.til" :autosize="{ minRows: 2, maxRows: 6 }" type="textarea"/>
+          <el-input :model-value="dialogMode === 'add' ? newToolForm.til : editToolForm.til" @update:model-value="dialogMode === 'add' ? newToolForm.til = $event : editToolForm.til = $event" :autosize="{ minRows: 2, maxRows: 6 }" type="textarea"/>
         </el-form-item>
         <el-form-item label="状态">
-            <el-select v-model="editToolForm.isvis" placeholder="选择" allow-create filterable>
-              <el-option v-for="i in isvisOptions" :key="i.value" :label="i.lb" :value="i.value" />
-            </el-select>
+          <el-select :model-value="dialogMode === 'add' ? newToolForm.isvis : editToolForm.isvis" @update:model-value="dialogMode === 'add' ? newToolForm.isvis = $event : editToolForm.isvis = $event" placeholder="选择" allow-create filterable>
+            <el-option v-for="i in isvisOptions" :key="i.value" :label="i.lb" :value="i.value" />
+          </el-select>
         </el-form-item>
       </el-form>
       <template #footer>
         <div>
-          <el-button type="success" @click="openURL(editToolForm.url)">访问</el-button>
-          <el-button @click="editFormVisible = false">取消</el-button>
-          <el-button type="primary" @click="editGitTool()">提交</el-button>
+          <el-button type="success" @click="openURL(dialogMode === 'add' ? newToolForm.url : editToolForm.url)" v-if="dialogMode === 'edit'">访问</el-button>
+          <el-button @click="dialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="dialogMode === 'add' ? addGitTool() : editGitTool()">提交</el-button>
         </div>
       </template>
     </el-dialog>
