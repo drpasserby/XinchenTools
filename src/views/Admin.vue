@@ -146,8 +146,8 @@ export default {
   data(){
     return{
       loading: false,
-      addFormVisible: false,
-      editFormVisible: false,
+      dialogVisible: false,
+      dialogMode: 'add', // 'add' or 'edit'
       searchVisible: false,
       cookieMgtVisible: false,
       searchInput: '',
@@ -266,7 +266,15 @@ export default {
       })
     },
     addTool(){
-        this.addFormVisible = true
+        this.dialogMode = 'add'
+        this.newToolForm = {
+          type: '',
+          name: '',
+          url: '',
+          til: '',
+          isvis: 1
+        }
+        this.dialogVisible = true
     },
     addGitTool(){
         ElMessageBox.confirm(
@@ -299,13 +307,14 @@ export default {
               });
             }
           })
-          this.addFormVisible = false
+          this.dialogVisible = false
         })
     },
     editTool(id){
       const tool = this.tools.find(tool => tool.id === id)
       this.editToolForm = { ...tool }
-      this.editFormVisible = true
+      this.dialogMode = 'edit'
+      this.dialogVisible = true
     },
     delTool(id){
       ElMessageBox.confirm(
@@ -357,7 +366,7 @@ export default {
               });
             }
           })
-          this.editFormVisible = false
+          this.dialogVisible = false
       })
     },
     searchToolsBtn(){
