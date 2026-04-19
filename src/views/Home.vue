@@ -295,6 +295,9 @@ export default {
       tools: [],
       searchTools: [],
       starTools: JSON.parse(localStorage.getItem("starTools")) || [],
+      realtimeResults: [],
+      showRealtimeResults: false,
+      realtimeSearchTimer: null,
     };
   },
   computed: {
@@ -310,6 +313,9 @@ export default {
         localStorage.setItem("starTools", JSON.stringify(newstarTool));
       },
       deep: true,
+    },
+    searchInput(newVal) {
+      this.handleRealtimeSearch(newVal);
     },
   },
   methods: {
@@ -404,6 +410,7 @@ export default {
       this.searchToolsBtn();
     },
     searchToolsBtn() {
+      this.showRealtimeResults = false;
       if (this.searchInput.trim() == "") {
         ElMessage({
           message: "请输入搜索关键词",
