@@ -40,7 +40,7 @@
           </div>
         </el-col>
         <el-col :xs="24" :lg="8" :xl="8">
-          <div class="my_card body_card_item menu_item">
+          <div class="my_card body_card_item menu_item" ref="searchContainer">
             <h3>搜索</h3>
             <el-input
               v-model="searchInput"
@@ -65,6 +65,19 @@
                 <el-button @click="searchToolsBtn">搜索</el-button>
               </template>
             </el-input>
+            <div class="realtime_results" v-if="showRealtimeResults && realtimeResults.length > 0">
+              <ul class="realtime_results_list">
+                <li
+                  v-for="tool in realtimeResults"
+                  :key="tool.id"
+                  class="realtime_result_item"
+                  @click="selectRealtimeResult(tool.id)"
+                >
+                  {{ tool.name }}
+                  <span class="realtime_result_type">{{ tool.type }}</span>
+                </li>
+              </ul>
+            </div>
             <el-tooltip
               content="点击可以快速筛选工具类型"
               placement="bottom"
