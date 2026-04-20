@@ -447,6 +447,46 @@ export default {
         });
       }
     },
+    handleRealtimeSearch(keyword) {
+      if (this.realtimeSearchTimer) {
+        clearTimeout(this.realtimeSearchTimer);
+      }
+      if (!keyword || keyword.trim() === "") {
+        this.realtimeResults = [];
+        this.showRealtimeResults = false;
+        return;
+      }
+      this.realtimeSearchTimer = setTimeout(() => {
+        const results = this.filterToolsByKeyword(keyword.trim());
+        this.realtimeResults = results;
+        this.showRealtimeResults = results.length > 0;
+      }, 300);
+    },
+    filterToolsByKeyword(keyword) {
+      const lowerKeyword = keyword.toLowerCase();
+      return this.tools.filter((tool) => {
+        return (
+          (tool.name && tool.name.toLowerCase().includes(lowerKeyword)) ||
+          (tool.type && tool.type.toLowerCase().includes(lowerKeyword)) ||
+          (tool.til && tool.til.toLowerCase().includes(lowerKeyword)) ||
+          (tool.url && tool.url.toLowerCase().includes(lowerKeyword))
+        );
+      });
+    },
+    selectRealtimeResult(id) {
+      this.toolOpenInfo(id);
+      this.showRealtimeResults = false;
+      this.searchInput = "";
+    },
+    hideRealtimeResults() {
+      this.showRealtimeResults = false;
+    },
+    handleClickOutside(event) {
+      const searchContainer = this.$refs.searchContainer;
+      if (searchContainer && !searchContainer.contains(event.target)) {
+        this.hideRealtimeResults();
+      }
+    },
   },
   mounted() {
     (this.getTools(), this.getSettings());
