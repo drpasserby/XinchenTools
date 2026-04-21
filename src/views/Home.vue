@@ -490,11 +490,15 @@ export default {
   },
   mounted() {
     (this.getTools(), this.getSettings());
+    document.addEventListener('click', this.handleClickOutside);
     if (this.settings.autoRandomTool == true) {
       setTimeout(() => {
         this.randomToolShow();
       }, 1000);
     }
+  },
+  beforeDestroy() {
+    document.removeEventListener('click', this.handleClickOutside);
   },
 };
 </script>
@@ -615,7 +619,42 @@ export default {
   border: 1px dashed #8b8b8b;
 }
 
-/* 手机端适配 */
+.realtime_results {
+  position: relative;
+  margin-top: 8px;
+  z-index: 1000;
+}
+.realtime_results_list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #e4e7ed;
+  border-radius: 4px;
+  background-color: white;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+.realtime_result_item {
+  padding: 10px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+.realtime_result_item:hover {
+  background-color: #f5f7fa;
+}
+.realtime_result_type {
+  font-size: 0.85em;
+  color: #909399;
+  background-color: #f0f2f5;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
 @media (max-width: 768px) {
   .header_card_remove_flex {
     flex-direction: column;
