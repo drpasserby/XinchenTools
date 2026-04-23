@@ -79,7 +79,7 @@ export default {
     openURL(url){
         window.open(url, '_blank')
     },
-    login(){
+    async login(){
       if(!this.loginForm.captchaInput || this.loginForm.captchaInput.toLowerCase() !== this.captchaCode.toLowerCase()){
         ElMessage({
           message: '验证码错误，请重新输入',
@@ -88,10 +88,12 @@ export default {
         this.generateCaptcha();
         return;
       }
-      axios.post('https://my.wulvxinchen.cn/tools2/api/login.php',{
-        username: this.loginForm.username,
-        password: this.loginForm.password
-      }).then(res=>{
+      try {
+        const hashedPassword = await this.hashPassword(this.loginForm.password);
+        const res = await axios.post('https://my.wulvxinchen.cn/tools2/api/login.php',{
+          username: this.loginForm.username,
+          password: hashedPassword
+        });
         if(res.data.code === 200){
           if(this.isRemeber){
             localStorage.setItem('userinfo',JSON.stringify(this.loginForm));
@@ -109,7 +111,7 @@ export default {
             type: 'error'
           });
         }
-      }).catch(err=>{
+      } catch(err) {
         ElMessage({
           message: '网络异常，请稍后再试',
           type: 'error'
