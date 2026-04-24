@@ -46,6 +46,7 @@
               v-model="searchInput"
               placeholder="输入关键词"
               class="input-with-select"
+              clearable
             >
               <template #prepend>
                 <svg
@@ -476,7 +477,6 @@ export default {
     selectRealtimeResult(id) {
       this.toolOpenInfo(id);
       this.showRealtimeResults = false;
-      this.searchInput = "";
     },
     hideRealtimeResults() {
       this.showRealtimeResults = false;
