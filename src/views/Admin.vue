@@ -5,6 +5,87 @@
       <el-button type="danger" @click="logout()">退出</el-button>
     </div>
     <div class="header_card my_card remove_flex">
+      <h3 class="panel_title">控制面板</h3>
+      <el-row :gutter="16">
+        <!-- 第一行：6个参数 -->
+        <el-col :xs="12" :sm="8" :md="8" :lg="4" :xl="4">
+          <div class="stat_card">
+            <p class="stat_label">总工具数量</p>
+            <p class="stat_value">{{ statTotalTools }}</p>
+          </div>
+        </el-col>
+        <el-col :xs="12" :sm="8" :md="8" :lg="4" :xl="4">
+          <div class="stat_card">
+            <p class="stat_label">可见工具</p>
+            <p class="stat_value">{{ statVisibleTools }}</p>
+          </div>
+        </el-col>
+        <el-col :xs="12" :sm="8" :md="8" :lg="4" :xl="4">
+          <div class="stat_card">
+            <p class="stat_label">隐藏工具</p>
+            <p class="stat_value">{{ statHiddenTools }}</p>
+          </div>
+        </el-col>
+        <el-col :xs="12" :sm="8" :md="8" :lg="4" :xl="4">
+          <div class="stat_card">
+            <p class="stat_label">已删除工具</p>
+            <p class="stat_value">{{ statDeletedTools }}</p>
+          </div>
+        </el-col>
+        <el-col :xs="12" :sm="8" :md="8" :lg="4" :xl="4">
+          <div class="stat_card">
+            <p class="stat_label">工具类型数</p>
+            <p class="stat_value">{{ statToolTypes }}</p>
+          </div>
+        </el-col>
+        <el-col :xs="12" :sm="8" :md="8" :lg="4" :xl="4">
+          <div class="stat_card">
+            <p class="stat_label">有效 Cookie</p>
+            <p class="stat_value">{{ statValidCookies }}</p>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row :gutter="16" style="margin-top: 12px;">
+        <!-- 第二行：6个参数 -->
+        <el-col :xs="12" :sm="8" :md="8" :lg="4" :xl="4">
+          <div class="stat_card">
+            <p class="stat_label">今日新增</p>
+            <p class="stat_value">{{ statTodayAdd }}</p>
+          </div>
+        </el-col>
+        <el-col :xs="12" :sm="8" :md="8" :lg="4" :xl="4">
+          <div class="stat_card">
+            <p class="stat_label">本周新增</p>
+            <p class="stat_value">{{ statWeekAdd }}</p>
+          </div>
+        </el-col>
+        <el-col :xs="12" :sm="8" :md="8" :lg="4" :xl="4">
+          <div class="stat_card">
+            <p class="stat_label">本月新增</p>
+            <p class="stat_value">{{ statMonthAdd }}</p>
+          </div>
+        </el-col>
+        <el-col :xs="12" :sm="8" :md="8" :lg="4" :xl="4">
+          <div class="stat_card">
+            <p class="stat_label">最后更新</p>
+            <p class="stat_value">{{ statLastUpdate }}</p>
+          </div>
+        </el-col>
+        <el-col :xs="12" :sm="8" :md="8" :lg="4" :xl="4">
+          <div class="stat_card">
+            <p class="stat_label">服务器状态</p>
+            <p class="stat_value">{{ statServerStatus }}</p>
+          </div>
+        </el-col>
+        <el-col :xs="12" :sm="8" :md="8" :lg="4" :xl="4">
+          <div class="stat_card">
+            <p class="stat_label">API 响应</p>
+            <p class="stat_value">{{ statApiResponse }}</p>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
+    <div class="header_card my_card remove_flex">
       <el-menu mode="horizontal">
         <el-menu-item index="1" @click="addTool()">快速新增</el-menu-item>
         <el-sub-menu index="2">
