@@ -549,3 +549,56 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.panel_title {
+  text-align: center;
+  margin: 0 0 12px 0;
+  font-size: 1.3em;
+  color: #303133;
+}
+.stat_card {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 14px 10px;
+  text-align: center;
+  border: 1px solid #ebeef5;
+  transition: all 0.3s;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.stat_card:hover {
+  border-color: #409eff;
+  box-shadow: 0 2px 12px 0 rgba(64, 158, 255, 0.15);
+  background-color: #ecf5ff;
+}
+.stat_label {
+  font-size: 1em;
+  font-weight: 600;
+  color: #606266;
+  margin: 0 0 8px 0;
+  line-height: 1.4;
+}
+.stat_value {
+  font-size: 0.95em;
+  color: #303133;
+  margin: 0;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .stat_card {
+    height: auto;
+    padding: 10px 6px;
+  }
+  .stat_label {
+    font-size: 0.85em;
+  }
+  .stat_value {
+    font-size: 0.8em;
+  }
+}
+</style>
