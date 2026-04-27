@@ -10,31 +10,37 @@
         <el-col :xs="12" :sm="8" :md="8" :lg="4" :xl="4">
           <div class="stat_card">
             <p class="stat_label">服务器状态</p>
-            <p class="stat_value">{{ statServerStatus }}</p>
+            <p class="stat_value">{{ getPara.statServerStatus }}</p>
           </div>
         </el-col>
         <el-col :xs="12" :sm="8" :md="8" :lg="4" :xl="4">
           <div class="stat_card">
             <p class="stat_label">总工具数量</p>
-            <p class="stat_value">{{ statTotalTools }}</p>
+            <p class="stat_value">{{ getPara.statTotalTools }}</p>
           </div>
         </el-col>
         <el-col :xs="12" :sm="8" :md="8" :lg="4" :xl="4">
           <div class="stat_card">
             <p class="stat_label">可见工具</p>
-            <p class="stat_value">{{ statVisibleTools }}</p>
+            <p class="stat_value">{{ getPara.statVisibleTools }}</p>
           </div>
         </el-col>
         <el-col :xs="12" :sm="8" :md="8" :lg="4" :xl="4">
           <div class="stat_card">
             <p class="stat_label">有效 Cookie</p>
-            <p class="stat_value">{{ statValidCookies }}</p>
+            <p class="stat_value">{{ getPara.statValidCookies }}</p>
           </div>
         </el-col>
         <el-col :xs="12" :sm="8" :md="8" :lg="4" :xl="4">
           <div class="stat_card">
             <p class="stat_label">用户数量</p>
-            <p class="stat_value">{{ userCount }}</p>
+            <p class="stat_value">{{ getPara.userCount }}</p>
+          </div>
+        </el-col>
+        <el-col :xs="12" :sm="8" :md="8" :lg="4" :xl="4">
+          <div class="stat_card">
+            <p class="stat_label">预留接口</p>
+            <p class="stat_value">{{ getPara.uselessAPI }}</p>
           </div>
         </el-col>
       </el-row>
@@ -209,7 +215,15 @@ export default {
       },
       tools: [],
       searchTools: [],
-      cookieMgts: []
+      cookieMgts: [],
+      getPara: {
+        statServerStatus: '',
+        statTotalTools: 0,
+        statVisibleTools: 0,
+        statValidCookies: 0,
+        userCount: 0,
+        uselessAPI: ''
+      }
     }
   },
   methods:{
