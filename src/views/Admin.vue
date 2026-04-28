@@ -507,6 +507,29 @@ export default {
         ElMessage({ message: '导出失败: ' + e.message, type: 'error' });
       }
     },
+    getParaData() {
+      axios.get('https://my.wulvxinchen.cn/tools2/api/getPara.php')
+        .then((res) => {
+          const data = res.data;
+          if (data.code === 200 && data.data) {
+            this.getPara.statServerStatus = data.data.serverStatus || '';
+            this.getPara.statTotalTools = data.data.totalTools ?? 0;
+            this.getPara.statVisibleTools = data.data.visibleTools ?? 0;
+            this.getPara.statValidCookies = data.data.validCookies ?? 0;
+            this.getPara.userCount = data.data.userCount ?? 0;
+          }
+          ElMessage({
+            message: '响应代码：' + data.code + ', 回执：' + data.msg,
+            type: data.code === 200 ? 'success' : 'error'
+          });
+        })
+        .catch((error) => {
+          ElMessage({
+            message: '获取失败，错误：' + error,
+            type: 'error'
+          });
+        });
+    },
     getTools(url){
       this.loading = true
       axios.get('https://my.wulvxinchen.cn/tools2/api/' + url).then(res=>{
@@ -514,7 +537,10 @@ export default {
         this.loading = false
       })
     },
-  }
+  },
+  mounted() {
+    this.getParaData();
+  },
 }
 </script>
 
