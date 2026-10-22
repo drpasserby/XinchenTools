@@ -29,7 +29,7 @@
             <el-form-item label="密码">
                 <el-input
                     v-model="loginForm.password"
-                    placeholder="输入用户名"
+                    placeholder="输入密码"
                     type="password"
                     >
                 </el-input>
@@ -53,8 +53,7 @@
 </template>
 
 <script>
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import api from '../api/client';
 import { ElMessage } from 'element-plus';
 export default {
   name: 'Login',
@@ -80,6 +79,13 @@ export default {
         window.open(url, '_blank')
     },
     async login(){
+      if(!this.loginForm.username || !this.loginForm.password){
+        ElMessage({
+          message: '请输入用户名和密码',
+          type: 'warning'
+        });
+        return;
+      }
       if(!this.loginForm.captchaInput || this.loginForm.captchaInput.toLowerCase() !== this.captchaCode.toLowerCase()){
         ElMessage({
           message: '验证码错误，请重新输入',
@@ -89,42 +95,31 @@ export default {
         return;
       }
       try {
-        const hashedPassword = await this.hashPassword(this.loginForm.password);
-        const res = await axios.post('https://my.wulvxinchen.cn/tools2/api/login.php',{
+        await api.post('/auth/login', {
           username: this.loginForm.username,
-          password: hashedPassword
+          password: this.loginForm.password
         });
-        if(res.data.code === 200){
-          if(this.isRemeber){
-            localStorage.setItem('userinfo',JSON.stringify(this.loginForm));
-          }else{
-            localStorage.removeItem('userinfo');
-          }
-          this.$router.push('/admin')
-          ElMessage({
-            message: '登录成功',
-            type: 'success'
-          });
+        if(this.isRemeber){
+          localStorage.setItem('userinfo', JSON.stringify({
+            username: this.loginForm.username,
+            password: this.loginForm.password
+          }));
         }else{
-          ElMessage({
-            message: res.data.msg,
-            type: 'error'
-          });
+          localStorage.removeItem('userinfo');
         }
+        ElMessage({
+          message: '登录成功',
+          type: 'success'
+        });
+        const redirect = typeof this.$route.query.redirect === 'string' ? this.$route.query.redirect : '/admin';
+        this.$router.push(redirect);
       } catch(err) {
         ElMessage({
-          message: '网络异常，请稍后再试',
+          message: err.response?.data?.msg || '网络异常，请稍后再试',
           type: 'error'
         });
+        this.generateCaptcha();
       }
-    },
-    async hashPassword(password) {
-      const encoder = new TextEncoder();
-      const data = encoder.encode(password);
-      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-      return hashHex;
     },
     generateCaptcha(){
       const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
@@ -176,48 +171,45 @@ export default {
         this.login();
       }
     },
-    fetchCookies(){
-      const cookieValue = Cookies.get('xinchentools');
-      if (cookieValue != undefined) {
-        axios.get('https://my.wulvxinchen.cn/tools2/api/testCookie.php', {
-          }).then(res => {
-            if (res.data.code == 200) {
-              ElMessage({
-                message: 'Cookie有效,即将登录跳转',
-                type: 'success',
-              });
-              this.$router.push('/admin');
-            } else if(res.data.code == 500) {
-              Cookies.remove('xinchentools');
-              ElMessage({
-                message: res.data.msg,
-                type: 'error',
-              });
-              }
-          }).catch(err => {
-            ElMessage({
-                message: '验证Cookie可用性网络异常，请稍后再试',
-                type: 'error',
-            });
-          });
-        } else {
+    async fetchSession(){
+      try {
+        const res = await api.get('/auth/session');
+        if(res.data?.data?.type === 'root'){
           ElMessage({
-              message: 'Cookie不存在，请登录',
-              type: 'error',
+            message: 'Cookie有效,即将登录跳转',
+            type: 'success',
+          });
+          this.$router.push('/admin');
+        }else{
+          ElMessage({
+            message: '当前账号无管理权限',
+            type: 'error',
           });
         }
+      } catch (err) {
+        if(err.response?.status !== 401){
+          ElMessage({
+            message: '验证Cookie可用性网络异常，请稍后再试',
+            type: 'error',
+          });
+        }
+      }
     }
   },
   mounted(){
     let userinfo = localStorage.getItem('userinfo');
     if(userinfo){
-      userinfo = JSON.parse(userinfo);
-      this.loginForm.username = userinfo.username;
-      this.loginForm.password = userinfo.password;
-      this.isRemeber = true;
+      try {
+        const parsed = JSON.parse(userinfo);
+        this.loginForm.username = parsed.username || '';
+        this.loginForm.password = parsed.password || '';
+        this.isRemeber = true;
+      } catch (err) {
+        localStorage.removeItem('userinfo');
+      }
     };
     this.generateCaptcha();
-    this.fetchCookies();
+    this.fetchSession();
     window.addEventListener('keydown', this.handleKeydown);
   }
   ,

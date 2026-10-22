@@ -74,8 +74,8 @@
     </div>
     <div class="header_card my_card remove_flex">
       <el-button-group>
-        <el-button type="primary" @click="getTools('searchAll.php')">获取全部</el-button>
-        <el-button type="warning" @click="getTools('searchNull.php')">获取空</el-button>
+        <el-button type="primary" @click="getTools('all')">获取全部</el-button>
+        <el-button type="warning" @click="getTools('null')">获取空</el-button>
       </el-button-group>&nbsp;
       <el-button-group>
         <el-button type="primary" @click="exportToolsJson()">导出Json</el-button>
@@ -176,8 +176,7 @@
 </template>
 
 <script>
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import api from '../api/client';
 import { ElMessage, ElMessageBox } from 'element-plus';
 
 export default {
@@ -234,85 +233,84 @@ export default {
       window.open(url, '_blank')
     },
     logout(){
-        Cookies.remove('xinchentools');
-        this.$router.push('/login')
+        api.post('/auth/logout').catch(() => {}).finally(() => {
+          this.$router.push('/login')
+        });
     },
-    testCookie(){
-        const cookieValue = Cookies.get('xinchentools');
-        if (cookieValue != undefined) {
-          axios.get('https://my.wulvxinchen.cn/tools2/api/testCookie.php', {
-          }).then(res => {
-              if (res.data.code == 200) {
-                  ElMessage({
-                      message: 'Cookie验证成功,值为:' + cookieValue + ',有效期到' + res.data.time,
-                      type: 'success',
-                  });
-              } else if(res.data.code == 500) {
-                  ElMessage({
-                      message: '失败：' + res.data.msg,
-                      type: 'error',
-                  });
-              }
-          }).catch(err => {
-              ElMessage({
-                  message: '网络异常，请稍后再试',
-                  type: 'error',
-              });
+    handleApiError(error, action){
+        const status = error.response?.status;
+        if (status === 401 || status === 403) {
+          ElMessage({
+            message: '登录已失效或无权限，请重新登录',
+            type: 'error',
           });
-        } else {
+          this.$router.push('/login');
+          return;
+        }
+        const msg = error.response?.data?.msg || error.message || '网络异常';
+        ElMessage({
+          message: action + '失败：' + msg,
+          type: 'error',
+        });
+    },
+    async testCookie(){
+        try {
+          const res = await api.get('/auth/session');
+          const { username, type, expiresAt } = res.data.data;
+          ElMessage({
+            message: 'Cookie验证成功,用户:' + username + '(' + type + '),有效期到' + expiresAt,
+            type: 'success',
+          });
+        } catch (error) {
+          if (error.response?.status === 401) {
             ElMessage({
-                message: 'Cookie不存在',
-                type: 'error',
+              message: 'Cookie不存在或已失效',
+              type: 'error',
             });
+          } else {
+            this.handleApiError(error, 'Cookie验证');
+          }
         }
     },
-    testIP(){
-      axios.get('https://my.wulvxinchen.cn/tools2/api/testIP.php', {
-      }).then(res => {
-        if (res.data.code == 200) {
-          ElMessageBox.alert(
-            '当前IP地址为:' + res.data.ip + ',\n\n当前设备UA为:' + res.data.ua,
-            'IP/UA信息',
-            {
-              confirmButtonText: '确定',
-              type: 'success',
-            }
-          );
-        }
-      });
+    async testIP(){
+      try {
+        const res = await api.get('/auth/whoami');
+        ElMessageBox.alert(
+          '当前IP地址为:' + res.data.ip + ',\n\n当前设备UA为:' + res.data.ua,
+          'IP/UA信息',
+          {
+            confirmButtonText: '确定',
+            type: 'success',
+          }
+        );
+      } catch (error) {
+        this.handleApiError(error, '获取IP/UA');
+      }
     },
-    mgtCookieGet(){
+    async mgtCookieGet(){
       this.cookieMgtVisible = true
-      axios.get('https://my.wulvxinchen.cn/tools2/api/getCookieMgt.php').then(res=>{
-        if(res.data.code === 200){
-          this.cookieMgts = res.data.cookies
-          ElMessage({
-            message: '获取成功',
-            type: 'success',
-          });
-        } else {
-          ElMessage({
-            message: '失败：' + res.data.msg,
-            type: 'error',
-          });
-        }
-      })
+      try {
+        const res = await api.get('/admin/sessions');
+        this.cookieMgts = res.data.data || []
+        ElMessage({
+          message: '获取成功',
+          type: 'success',
+        });
+      } catch (error) {
+        this.handleApiError(error, '获取Cookie');
+      }
     },
-    mgtCookieLost(id){
-      axios.get('https://my.wulvxinchen.cn/tools2/api/delCookieMgt.php?id=' + id).then(res=>{
-        if(res.data.code === 200){
-          ElMessage({
-            message: res.data.msg,
-            type: 'success',
-          });
-          this.mgtCookieGet()
-        } else {
-          ElMessage({
-            message: '删除失败：' + res.data.msg,
-            type: 'error',
-          });
-        }
-      })
+    async mgtCookieLost(id){
+      try {
+        const res = await api.delete('/admin/sessions/' + id);
+        ElMessage({
+          message: res.data.msg,
+          type: 'success',
+        });
+        this.mgtCookieGet()
+      } catch (error) {
+        this.handleApiError(error, '删除Cookie');
+      }
     },
     addTool(){
         this.dialogMode = 'add'
@@ -334,62 +332,32 @@ export default {
             cancelButtonText: '取消',
             type: 'warning',
           }
-        ).then(() => {
-          axios.post('https://my.wulvxinchen.cn/tools2/api/addTool.php', this.newToolForm).then(res=>{
-            if(res.data.code === 200){
-              ElMessage({
-                message: res.data.msg,
-                type: 'success',
-              });
-              this.getTools('searchAll.php')
-              this.newToolForm = {
-                type: '',
-                name: '',
-                url: '',
-                til: '',
-                isvis: 1
-              }
-            } else {
-              ElMessage({
-                message: '添加失败：' + res.data.msg,
-                type: 'error',
-              });
+        ).then(async () => {
+          try {
+            const res = await api.post('/tools', this.newToolForm)
+            ElMessage({
+              message: res.data.msg,
+              type: 'success',
+            });
+            this.dialogVisible = false
+            this.getTools('all')
+            this.newToolForm = {
+              type: '',
+              name: '',
+              url: '',
+              til: '',
+              isvis: 1
             }
-          })
-          this.dialogVisible = false
-        })
+          } catch (error) {
+            this.handleApiError(error, '添加');
+          }
+        }).catch(() => {})
     },
     editTool(id){
       const tool = this.tools.find(tool => tool.id === id)
       this.editToolForm = { ...tool }
       this.dialogMode = 'edit'
       this.dialogVisible = true
-    },
-    delTool(id){
-      ElMessageBox.confirm(
-        '确定要隐藏该网址吗？',
-        '再次确认',
-        {
-          confirmButtonText: '隐藏',
-          cancelButtonText: '取消',
-          type: 'warning',
-        }
-      ).then(() => {
-        axios.post('https://my.wulvxinchen.cn/tools2/api/delTool.php', { id: id }).then(res=>{
-          if(res.data.code === 200){
-            ElMessage({
-              message: '隐藏成功',
-              type: 'success',
-            });
-            this.getTools('searchAll.php')
-          } else {
-            ElMessage({
-              message: '隐藏失败：' + res.data.msg,
-              type: 'error',
-            });
-          }
-        })
-    })
     },
     editGitTool(){
       ElMessageBox.confirm(
@@ -400,23 +368,20 @@ export default {
             cancelButtonText: '取消',
             type: 'warning',
           }
-        ).then(() => {
-          axios.post('https://my.wulvxinchen.cn/tools2/api/editTool.php', this.editToolForm).then(res=>{
-            if(res.data.code === 200){
-              ElMessage({
-                message: res.data.msg,
-                type: 'success',
-              });
-              this.getTools('searchAll.php')
-            } else {
-              ElMessage({
-                message: '修改失败：' + res.data.msg,
-                type: 'error',
-              });
-            }
-          })
-          this.dialogVisible = false
-      })
+        ).then(async () => {
+          const { id, ...payload } = this.editToolForm
+          try {
+            const res = await api.put('/tools/' + id, payload)
+            ElMessage({
+              message: res.data.msg,
+              type: 'success',
+            });
+            this.dialogVisible = false
+            this.getTools('all')
+          } catch (error) {
+            this.handleApiError(error, '修改');
+          }
+        }).catch(() => {})
     },
     searchToolsBtn(){
       if (this.searchInput.trim() == ''){
@@ -507,35 +472,29 @@ export default {
         ElMessage({ message: '导出失败: ' + e.message, type: 'error' });
       }
     },
-    getParaData() {
-      axios.get('https://my.wulvxinchen.cn/tools2/api/getPara.php')
-        .then((res) => {
-          const data = res.data;
-          if (data.code === 200 && data.data) {
-            this.getPara.statServerStatus = data.data.serverStatus || '';
-            this.getPara.statTotalTools = data.data.totalTools ?? 0;
-            this.getPara.statVisibleTools = data.data.visibleTools ?? 0;
-            this.getPara.statValidCookies = data.data.validCookies ?? 0;
-            this.getPara.userCount = data.data.userCount ?? 0;
-          }
-          ElMessage({
-            message: '响应代码：' + data.code + ', 回执：' + data.msg,
-            type: data.code === 200 ? 'success' : 'error'
-          });
-        })
-        .catch((error) => {
-          ElMessage({
-            message: '获取失败，错误：' + error,
-            type: 'error'
-          });
-        });
+    async getParaData() {
+      try {
+        const res = await api.get('/admin/stats');
+        const data = res.data.data || {};
+        this.getPara.statServerStatus = data.serverStatus || '';
+        this.getPara.statTotalTools = data.totalTools ?? 0;
+        this.getPara.statVisibleTools = data.visibleTools ?? 0;
+        this.getPara.statValidCookies = data.validCookies ?? 0;
+        this.getPara.userCount = data.userCount ?? 0;
+      } catch (error) {
+        this.handleApiError(error, '获取统计数据');
+      }
     },
-    getTools(url){
+    async getTools(filter){
       this.loading = true
-      axios.get('https://my.wulvxinchen.cn/tools2/api/' + url).then(res=>{
-        this.tools = res.data.data
+      try {
+        const res = await api.get('/admin/tools', { params: { filter } });
+        this.tools = res.data.data || [];
+      } catch (error) {
+        this.handleApiError(error, '获取工具列表');
+      } finally {
         this.loading = false
-      })
+      }
     },
   },
   mounted() {

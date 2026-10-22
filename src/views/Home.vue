@@ -271,7 +271,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import api from "../api/client";
 import { ElMessage, ElMessageBox } from 'element-plus';
 export default {
   name: "Home",
@@ -331,26 +331,24 @@ export default {
     getTools() {
       const startTime = new Date().getTime();
       this.loading = true;
-      axios
-        .get("https://my.wulvxinchen.cn/tools2/api/searchAll.php")
+      api
+        .get("/tools")
         .then((res) => {
-          if (res.data.resultCode == 200) {
-            this.tools = res.data.data.slice().reverse();
-            this.loading = false;
-            this.loadingStatus = true;
-            const endTime = new Date().getTime();
-            this.loadingTime = endTime - startTime;
-          }
+          this.tools = (res.data.data || []).slice().reverse();
+          this.loadingStatus = true;
         })
         .catch((error) => {
-          this.loading = false;
           this.loadingStatus = false;
-          const endTime = new Date().getTime();
-          this.loadingTime = endTime - startTime;
+          const detail = error.response?.data?.msg || error.message;
           ElMessage({
-            message: "工具列表加载失败，请稍后重试(" + error + ")",
+            message: "工具列表加载失败，请稍后重试(" + detail + ")",
             type: "error",
           });
+        })
+        .finally(() => {
+          this.loading = false;
+          const endTime = new Date().getTime();
+          this.loadingTime = endTime - startTime;
         });
     },
     randomToolShow() {

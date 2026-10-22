@@ -40,8 +40,8 @@
     </div>
     <div class="header_card my_card tool_card remove_flex" v-else>
       <div style="text-align: center;" v-for="n in 5" :key="n">
-        <img src="https://my.wulvxinchen.cn/tools2/pubilc/error.png" alt="404" style="max-width: 100%;" v-show="errorts">
-        <img src="https://my.wulvxinchen.cn/tools2/pubilc/error2.png" alt="404" style="max-width: 100%;" v-show="!errorts">
+        <img :src="baseUrl + 'error.png'" alt="404" style="max-width: 100%;" v-show="errorts">
+        <img :src="baseUrl + 'error2.png'" alt="404" style="max-width: 100%;" v-show="!errorts">
       </div>
     </div>
     <div class="header_card my_card">
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import api from '../api/client';
 import { ElMessage, ElMessageBox } from 'element-plus';
 
 export default {
@@ -74,6 +74,7 @@ export default {
   },
   data(){
     return{
+        baseUrl: import.meta.env.BASE_URL,
         loading: false,
         previewVisible: false,
         tool: {
@@ -164,34 +165,34 @@ export default {
       if (id === undefined || id === null) return false
         return Array.isArray(this.starTools) && this.starTools.includes(id)
     },
-    getTool(){
+    async getTool(){
       this.loading = true
-      axios.get('https://my.wulvxinchen.cn/tools2/api/searchID.php?id='+this.tool.id).then(res=>{
-          this.tool = res.data.data[0]
-          this.loading = false
-          if(res.data.resultCode == 404 || res.data.data[0].isvis == -1){
-            this.tool = {
-              id: 'ERROR',
-              type: 'ERROR',
-              name: 'ERROR',
-              url: 'ERROR',
-              til: 'ERROR',
-              isvis: -1
-            }
-            this.errorImg()
-            ElMessageBox.alert(
-              '未找到该工具。',
-              '错误',
-              {
-                confirmButtonText: '返回',
-                type: 'error',
-              }
-            ).then(() => {this.toPush('/')});
-          
+      try {
+        const res = await api.get('/tools/' + encodeURIComponent(this.tool.id))
+        this.tool = res.data.data
+        this.autoJump()
+      } catch (error) {
+        this.tool = {
+          id: 'ERROR',
+          type: 'ERROR',
+          name: 'ERROR',
+          url: 'ERROR',
+          til: 'ERROR',
+          isvis: -1
+        }
+        this.errorImg()
+        const message = error.response?.status === 404 ? '未找到该工具。' : '工具加载失败，请稍后再试。'
+        ElMessageBox.alert(
+          message,
+          '错误',
+          {
+            confirmButtonText: '返回',
+            type: 'error',
           }
-          this.autoJump()
-      })
-      
+        ).then(() => {this.toPush('/')})
+      } finally {
+        this.loading = false
+      }
     },
     shareURL(){
       const input = document.createElement('input')
