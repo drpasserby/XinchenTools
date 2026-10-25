@@ -194,22 +194,35 @@ export default {
         this.loading = false
       }
     },
-    shareURL(){
-      const input = document.createElement('input')
-      if(this.settings.autoRedirect == true){
-          input.value = window.location.href + "&auto=1"
+    async shareURL(id){
+      const toolId = id ?? this.$route.query.id
+      if (!toolId || toolId === 'LOADING' || toolId === 'ERROR') {
+        ElMessage({
+          message: '工具尚未加载完成，请稍后再试',
+          type: 'warning'
+        })
+        return
       }
-      else{
-          input.value = window.location.href
+
+      const query = this.settings.autoRedirect ? { id: toolId, auto: '1' } : { id: toolId }
+      const resolved = this.$router.resolve({ name: 'Page', query })
+      const url = new URL(resolved.href, window.location.origin).href
+
+      try {
+        if (!navigator.clipboard?.writeText) {
+          throw new Error('当前浏览器不支持自动复制')
+        }
+        await navigator.clipboard.writeText(url)
+        ElMessage({
+          message: '已复制网址到剪贴板,快去分享吧!',
+          type: 'success'
+        })
+      } catch (error) {
+        ElMessageBox.alert(url, '复制失败，请手动复制链接', {
+          confirmButtonText: '知道了',
+          type: 'warning'
+        })
       }
-      document.body.appendChild(input)
-      input.select()
-      document.execCommand('Copy')
-      document.body.removeChild(input)
-      ElMessage({
-              message: '已复制网址到剪贴板,快去分享吧!',
-              type: 'success'
-          });
     },
     errorImg(){
       setInterval(()=>{

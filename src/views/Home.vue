@@ -388,21 +388,26 @@ export default {
     openURL(url) {
       window.open(url, "_blank");
     },
-    shareURL(id) {
-      const input = document.createElement("input");
-      if (this.settings.autoRedirect == true) {
-        input.value = window.location.href + "page?id=" + id + "&auto=1";
-      } else {
-        input.value = window.location.href + "page?id=" + id;
+    async shareURL(id) {
+      const query = this.settings.autoRedirect ? { id, auto: "1" } : { id };
+      const resolved = this.$router.resolve({ name: "Page", query });
+      const url = new URL(resolved.href, window.location.origin).href;
+
+      try {
+        if (!navigator.clipboard?.writeText) {
+          throw new Error("当前浏览器不支持自动复制");
+        }
+        await navigator.clipboard.writeText(url);
+        ElMessage({
+          message: "已复制网址到剪贴板,快去分享吧!",
+          type: "success",
+        });
+      } catch (error) {
+        ElMessageBox.alert(url, "复制失败，请手动复制链接", {
+          confirmButtonText: "知道了",
+          type: "warning",
+        });
       }
-      document.body.appendChild(input);
-      input.select();
-      document.execCommand("Copy");
-      document.body.removeChild(input);
-      ElMessage({
-        message: "已复制网址到剪贴板,快去分享吧!",
-        type: "success",
-      });
     },
     searchInputQuick(keyword) {
       this.searchInput = keyword;
@@ -495,7 +500,7 @@ export default {
       }, 1000);
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     document.removeEventListener('click', this.handleClickOutside);
   },
 };
