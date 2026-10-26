@@ -6,7 +6,7 @@
 
 心尘的工具集是一个聚合各类实用网站工具的在线导航平台，收录了来自互联网的优质工具站点。用户可以浏览、搜索、收藏、分享各类工具，支持随机抽卡发现新工具，提供网站预览等功能。
 
-**在线访问**：[https://my.wulvxinchen.cn/tools2/](https://my.wulvxinchen.cn/tools2/)
+**在线访问**：[https://my.wulvxinchen.cn/tools/](https://my.wulvxinchen.cn/tools/)
 
 ## 核心功能
 
@@ -50,7 +50,7 @@
 ## 使用指南
 
 ### 快速开始
-1. 访问 [工具集首页](https://my.wulvxinchen.cn/tools2/)
+1. 访问 [工具集首页](https://my.wulvxinchen.cn/tools/)
 2. 浏览工具卡片，点击「详情」查看完整信息
 3. 点击「访问」直接打开工具网站
 4. 使用顶部搜索框或分类标签快速查找所需工具
@@ -87,47 +87,41 @@
 - **UI 组件库**：Element Plus
 - **路由**：Vue Router 4
 - **HTTP 客户端**：Axios
-- **Cookie 管理**：js-cookie
+- **后端**：Node.js + Express 5 + MySQL (mysql2)
 - **语言**：中文界面
 
 ## 项目结构
 
 ```
+server/                 # Node.js 后端
+├── src/
+│   ├── routes/         # auth / tools / admin 接口
+│   ├── db/             # MySQL 与本地 Mock 数据层
+│   ├── lib/            # 校验、密码、错误处理
+│   ├── app.js          # Express 应用
+│   └── server.js       # 启动入口
+├── test/               # 接口集成测试
+└── .env.example        # 环境变量模板
+
 src/
-├── api/              # 后端 API 接口 (PHP)
+├── api/
+│   └── client.js       # Axios 实例（统一 API 基址）
 ├── views/
-│   ├── Home.vue      # 首页 - 工具列表、搜索、收藏
-│   ├── About.vue     # 关于页 - 设置、赞助、鸣谢
-│   ├── Page.vue      # 详情页 - 单工具展示、操作
-│   ├── Login.vue     # 登录页 - 管理员认证
-│   └── Admin.vue     # 后台 - 工具/统计/Cookie 管理
-├── router/index.js   # 路由配置
-├── main.js           # 入口文件
-├── App.vue           # 根组件
-└── style.css         # 全局样式
-```
-
-## 本地开发
-
-```bash
-# 安装依赖
-npm install
-
-# 启动开发服务器
-npm run dev
-
-# 构建生产版本
-npm run build
-
-# 预览构建结果
-npm run preview
+│   ├── Home.vue        # 首页 - 工具列表、搜索、收藏
+│   ├── About.vue       # 关于页 - 设置、赞助、鸣谢
+│   ├── Page.vue        # 详情页 - 单工具展示、操作
+│   ├── Login.vue       # 登录页 - 管理员认证
+│   └── Admin.vue       # 后台 - 工具/统计/Cookie 管理
+├── router/index.js     # 路由配置
+├── main.js             # 入口文件
+├── App.vue             # 根组件
+└── style.css           # 全局样式
 ```
 
 ## 反馈与贡献
 
 - **问题反馈**：[GitHub Issues](https://github.com/drpasserby/XinchenTools/issues)
 - **源码仓库**：[GitHub](https://github.com/drpasserby/XinchenTools)
-- **作者主页**：[吾律心尘](https://wulvxinchen.cn/)
 
 ## 版权声明
 
